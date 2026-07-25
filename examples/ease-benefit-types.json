@@ -1,0 +1,163 @@
+[
+    {
+        "id": 412,
+        "count": 1,
+        "link": "https://www.ease.com/marketplace/benefit_types/add/",
+        "name": "AD&amp;D",
+        "slug": "add"
+    },
+    {
+        "id": 409,
+        "count": 1,
+        "link": "https://www.ease.com/marketplace/benefit_types/agency-management/",
+        "name": "Agency Management",
+        "slug": "agency-management"
+    },
+    {
+        "id": 334,
+        "count": 6,
+        "link": "https://www.ease.com/marketplace/benefit_types/broker-support/",
+        "name": "Broker Support",
+        "slug": "broker-support"
+    },
+    {
+        "id": 419,
+        "count": 1,
+        "link": "https://www.ease.com/marketplace/benefit_types/cobra-administration/",
+        "name": "COBRA Administration",
+        "slug": "cobra-administration"
+    },
+    {
+        "id": 331,
+        "count": 0,
+        "link": "https://www.ease.com/marketplace/benefit_types/cobra-integration/",
+        "name": "COBRA Integration",
+        "slug": "cobra-integration"
+    },
+    {
+        "id": 344,
+        "count": 5,
+        "link": "https://www.ease.com/marketplace/benefit_types/crm-integration/",
+        "name": "CRM Integration",
+        "slug": "crm-integration"
+    },
+    {
+        "id": 364,
+        "count": 7,
+        "link": "https://www.ease.com/marketplace/benefit_types/dental/",
+        "name": "Dental",
+        "slug": "dental"
+    },
+    {
+        "id": 341,
+        "count": 15,
+        "link": "https://www.ease.com/marketplace/benefit_types/easeconnect/",
+        "name": "EaseConnect",
+        "slug": "easeconnect"
+    },
+    {
+        "id": 340,
+        "count": 13,
+        "link": "https://www.ease.com/marketplace/benefit_types/easeconnect-plus/",
+        "name": "EaseConnect+",
+        "slug": "easeconnect-plus"
+    },
+    {
+        "id": 336,
+        "count": 13,
+        "link": "https://www.ease.com/marketplace/benefit_types/enrollment-assistance/",
+        "name": "Enrollment Assistance",
+        "slug": "enrollment-assistance"
+    },
+    {
+        "id": 413,
+        "count": 0,
+        "link": "https://www.ease.com/marketplace/benefit_types/fin/",
+        "name": "Fin",
+        "slug": "fin"
+    },
+    {
+        "id": 414,
+        "count": 0,
+        "link": "https://www.ease.com/marketplace/benefit_types/financial-wellness/",
+        "name": "Financial Wellness",
+        "slug": "financial-wellness"
+    },
+    {
+        "id": 362,
+        "count": 1,
+        "link": "https://www.ease.com/marketplace/benefit_types/hr-tools-compliance/",
+        "name": "HR Tools &amp; Compliance",
+        "slug": "hr-tools-compliance"
+    },
+    {
+        "id": 332,
+        "count": 0,
+        "link": "https://www.ease.com/marketplace/benefit_types/hsa-hra-fsa-integration/",
+        "name": "HSA HRA &amp; FSA Integration",
+        "slug": "hsa-hra-fsa-integration"
+    },
+    {
+        "id": 361,
+        "count": 5,
+        "link": "https://www.ease.com/marketplace/benefit_types/identity-theft-and-protection/",
+        "name": "Identity Theft &amp; Protection",
+        "slug": "identity-theft-and-protection"
+    },
+    {
+        "id": 410,
+        "count": 1,
+        "link": "https://www.ease.com/marketplace/benefit_types/ltd/",
+        "name": "LTD",
+        "slug": "ltd"
+    },
+    {
+        "id": 395,
+        "count": 1,
+        "link": "https://www.ease.com/marketplace/benefit_types/pet-care-benefits/",
+        "name": "Pet Care Benefits",
+        "slug": "pet-care-benefits"
+    },
+    {
+        "id": 345,
+        "count": 0,
+        "link": "https://www.ease.com/marketplace/benefit_types/pet-insurance-enrollment-integration/",
+        "name": "Pet Insurance Enrollment Integration",
+        "slug": "pet-insurance-enrollment-integration"
+    },
+    {
+        "id": 386,
+        "count": 0,
+        "link": "https://www.ease.com/marketplace/benefit_types/premium-billing-services/",
+        "name": "Premium Billing Services",
+        "slug": "premium-billing-services"
+    },
+    {
+        "id": 411,
+        "count": 1,
+        "link": "https://www.ease.com/marketplace/benefit_types/std/",
+        "name": "STD",
+        "slug": "std"
+    },
+    {
+        "id": 363,
+        "count": 0,
+        "link": "https://www.ease.com/marketplace/benefit_types/tailored-benefits/",
+        "name": "Tailored Benefits",
+        "slug": "tailored-benefits"
+    },
+    {
+        "id": 376,
+        "count": 7,
+        "link": "https://www.ease.com/marketplace/benefit_types/vision/",
+        "name": "Vision",
+        "slug": "vision"
+    },
+    {
+        "id": 338,
+        "count": 0,
+        "link": "https://www.ease.com/marketplace/benefit_types/welfare-assistance-integration/",
+        "name": "Welfare Assistance Integration",
+        "slug": "welfare-assistance-integration"
+    }
+]

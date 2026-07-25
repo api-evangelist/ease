@@ -1,0 +1,3531 @@
+openapi: 3.1.0
+info:
+  title: Ease Content & Marketplace API
+  version: wp/v2
+  summary: The public, read-only WordPress REST API behind www.ease.com.
+  description: 'Ease (Enrollease, Inc.) publishes no public developer portal for its benefits administration
+    platform, but its marketing site at www.ease.com runs on WordPress and serves the standard WordPress
+    REST API anonymously at https://www.ease.com/wp-json/. That surface is a real, machine-readable, unauthenticated
+    read API over Ease content: blog posts, pages, media, events, customer testimonials, and - most usefully
+    - the full Ease Marketplace partner directory (custom post type "partner", 110 records) together with
+    its partner_types (16 terms) and benefit_types (23 terms) taxonomies. This document is DERIVED from
+    the live route discovery document at https://www.ease.com/wp-json/ (saved verbatim as ease-content-wp-routes-original.json);
+    every path, method, parameter and parameter schema here comes from that document, and every path listed
+    was verified to return HTTP 200 anonymously on 2026-07-25. Write methods (POST/PUT/PATCH/DELETE) and
+    the administrative namespaces (users, settings, plugins, themes, elementor, yoast, wpe) are deliberately
+    excluded: they exist on the host but require authentication (WordPress Application Passwords, HTTP
+    Basic) and are not a public API. This is a content API - it is NOT the Ease benefits administration
+    API. Ease enrollment data moves over ANSI X12 EDI 834 files (EaseConnect), privately negotiated direct
+    carrier connections (EaseConnect+), and partner-portal SFTP, none of which are publicly documented.'
+  contact:
+    name: Ease Support
+    url: https://help.ease.com/
+  termsOfService: https://www.ease.com/terms/
+  x-provenance:
+    method: derived
+    source: https://www.ease.com/wp-json/
+    derived: '2026-07-25'
+    note: Derived by API Evangelist from the live WordPress route discovery document; not published by
+      Ease.
+servers:
+- url: https://www.ease.com/wp-json
+  description: Production
+tags:
+- name: Posts
+  description: The Ease blog.
+- name: Pages
+  description: Marketing and product pages on www.ease.com.
+- name: Media
+  description: Images and files in the Ease media library.
+- name: Marketplace
+  description: 'The Ease Marketplace partner directory: carriers, general agencies, third-party administrators,
+    payroll providers and agency-management vendors, plus the partner_types and benefit_types taxonomies
+    used to filter them.'
+- name: Events
+  description: Ease in-person and virtual events, and their categories.
+- name: Testimonials
+  description: Published customer testimonials.
+- name: Taxonomy
+  description: Blog categories and tags.
+- name: Discovery
+  description: 'Self-describing metadata: registered content types, taxonomies and post statuses.'
+- name: Search
+  description: Cross-content-type search over published site content.
+- name: oEmbed
+  description: oEmbed representation of an ease.com URL.
+security:
+- {}
+paths:
+  /wp/v2/posts:
+    get:
+      operationId: listPosts
+      summary: List blog posts
+      description: Blog posts exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Posts
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 pagination links (rel="next" / rel="prev").
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: after
+        in: query
+        required: false
+        description: Limit response to posts published after a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: author
+        in: query
+        required: false
+        description: Limit result set to posts assigned to specific authors.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: author_exclude
+        in: query
+        required: false
+        description: Ensure result set excludes posts assigned to specific authors.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: before
+        in: query
+        required: false
+        description: Limit response to posts published before a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: categories
+        in: query
+        required: false
+        description: Limit result set to items with specific terms assigned in the categories taxonomy.
+        schema:
+          type: object
+      - name: categories_exclude
+        in: query
+        required: false
+        description: Limit result set to items except those with specific terms assigned in the categories
+          taxonomy.
+        schema:
+          type: object
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+      - name: exclude
+        in: query
+        required: false
+        description: Ensure result set excludes specific IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: format
+        in: query
+        required: false
+        description: Limit result set to items assigned one or more given formats.
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - standard
+            - aside
+            - chat
+            - gallery
+            - link
+            - image
+            - quote
+            - status
+            - video
+            - audio
+      - name: ignore_sticky
+        in: query
+        required: false
+        description: Whether to ignore sticky posts or not.
+        schema:
+          type: boolean
+          default: true
+      - name: include
+        in: query
+        required: false
+        description: Limit result set to specific IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: modified_after
+        in: query
+        required: false
+        description: Limit response to posts modified after a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: modified_before
+        in: query
+        required: false
+        description: Limit response to posts modified before a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: offset
+        in: query
+        required: false
+        description: Offset the result set by a specific number of items.
+        schema:
+          type: integer
+      - name: order
+        in: query
+        required: false
+        description: Order sort attribute ascending or descending.
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      - name: orderby
+        in: query
+        required: false
+        description: Sort collection by post attribute.
+        schema:
+          type: string
+          enum:
+          - author
+          - date
+          - id
+          - include
+          - modified
+          - parent
+          - relevance
+          - slug
+          - include_slugs
+          - title
+          default: date
+      - name: page
+        in: query
+        required: false
+        description: Current page of the collection.
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: per_page
+        in: query
+        required: false
+        description: Maximum number of items to be returned in result set.
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+      - name: search
+        in: query
+        required: false
+        description: Limit results to those matching a string.
+        schema:
+          type: string
+      - name: search_columns
+        in: query
+        required: false
+        description: Array of column names to be searched.
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - post_title
+            - post_content
+            - post_excerpt
+          default: []
+      - name: search_semantics
+        in: query
+        required: false
+        description: How to interpret the search input.
+        schema:
+          type: string
+          enum:
+          - exact
+      - name: slug
+        in: query
+        required: false
+        description: Limit result set to posts with one or more specific slugs.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: status
+        in: query
+        required: false
+        description: Limit result set to posts assigned one or more statuses.
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - publish
+            - future
+            - draft
+            - pending
+            - private
+            - trash
+            - auto-draft
+            - inherit
+            - request-pending
+            - request-confirmed
+            - request-failed
+            - request-completed
+            - acf-disabled
+            - any
+          default:
+          - publish
+      - name: sticky
+        in: query
+        required: false
+        description: Limit result set to items that are sticky.
+        schema:
+          type: boolean
+      - name: tags
+        in: query
+        required: false
+        description: Limit result set to items with specific terms assigned in the tags taxonomy.
+        schema:
+          type: object
+      - name: tags_exclude
+        in: query
+        required: false
+        description: Limit result set to items except those with specific terms assigned in the tags taxonomy.
+        schema:
+          type: object
+      - name: tax_relation
+        in: query
+        required: false
+        description: Limit result set based on relationship between multiple taxonomies.
+        schema:
+          type: string
+          enum:
+          - AND
+          - OR
+  /wp/v2/posts/{id}:
+    get:
+      operationId: getPost
+      summary: Retrieve a blog post
+      description: Blog post exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Posts
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the post.
+        schema:
+          type: integer
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+      - name: excerpt_length
+        in: query
+        required: false
+        description: Override the default excerpt length.
+        schema:
+          type: integer
+      - name: password
+        in: query
+        required: false
+        description: The password for the post if it is password protected.
+        schema:
+          type: string
+  /wp/v2/pages:
+    get:
+      operationId: listPages
+      summary: List site pages
+      description: Site pages exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Pages
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 pagination links (rel="next" / rel="prev").
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: after
+        in: query
+        required: false
+        description: Limit response to posts published after a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: author
+        in: query
+        required: false
+        description: Limit result set to posts assigned to specific authors.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: author_exclude
+        in: query
+        required: false
+        description: Ensure result set excludes posts assigned to specific authors.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: before
+        in: query
+        required: false
+        description: Limit response to posts published before a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+      - name: exclude
+        in: query
+        required: false
+        description: Ensure result set excludes specific IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: include
+        in: query
+        required: false
+        description: Limit result set to specific IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: menu_order
+        in: query
+        required: false
+        description: Limit result set to posts with a specific menu_order value.
+        schema:
+          type: integer
+      - name: modified_after
+        in: query
+        required: false
+        description: Limit response to posts modified after a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: modified_before
+        in: query
+        required: false
+        description: Limit response to posts modified before a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: offset
+        in: query
+        required: false
+        description: Offset the result set by a specific number of items.
+        schema:
+          type: integer
+      - name: order
+        in: query
+        required: false
+        description: Order sort attribute ascending or descending.
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      - name: orderby
+        in: query
+        required: false
+        description: Sort collection by post attribute.
+        schema:
+          type: string
+          enum:
+          - author
+          - date
+          - id
+          - include
+          - modified
+          - parent
+          - relevance
+          - slug
+          - include_slugs
+          - title
+          - menu_order
+          default: date
+      - name: page
+        in: query
+        required: false
+        description: Current page of the collection.
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: parent
+        in: query
+        required: false
+        description: Limit result set to items with particular parent IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: parent_exclude
+        in: query
+        required: false
+        description: Limit result set to all items except those of a particular parent ID.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: per_page
+        in: query
+        required: false
+        description: Maximum number of items to be returned in result set.
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+      - name: search
+        in: query
+        required: false
+        description: Limit results to those matching a string.
+        schema:
+          type: string
+      - name: search_columns
+        in: query
+        required: false
+        description: Array of column names to be searched.
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - post_title
+            - post_content
+            - post_excerpt
+          default: []
+      - name: search_semantics
+        in: query
+        required: false
+        description: How to interpret the search input.
+        schema:
+          type: string
+          enum:
+          - exact
+      - name: slug
+        in: query
+        required: false
+        description: Limit result set to posts with one or more specific slugs.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: status
+        in: query
+        required: false
+        description: Limit result set to posts assigned one or more statuses.
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - publish
+            - future
+            - draft
+            - pending
+            - private
+            - trash
+            - auto-draft
+            - inherit
+            - request-pending
+            - request-confirmed
+            - request-failed
+            - request-completed
+            - acf-disabled
+            - any
+          default:
+          - publish
+  /wp/v2/pages/{id}:
+    get:
+      operationId: getPage
+      summary: Retrieve a site page
+      description: Site page exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Pages
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the post.
+        schema:
+          type: integer
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+      - name: excerpt_length
+        in: query
+        required: false
+        description: Override the default excerpt length.
+        schema:
+          type: integer
+      - name: password
+        in: query
+        required: false
+        description: The password for the post if it is password protected.
+        schema:
+          type: string
+  /wp/v2/media:
+    get:
+      operationId: listMedia
+      summary: List media items
+      description: Media items exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Media
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 pagination links (rel="next" / rel="prev").
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: after
+        in: query
+        required: false
+        description: Limit response to posts published after a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: author
+        in: query
+        required: false
+        description: Limit result set to posts assigned to specific authors.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: author_exclude
+        in: query
+        required: false
+        description: Ensure result set excludes posts assigned to specific authors.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: before
+        in: query
+        required: false
+        description: Limit response to posts published before a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+      - name: exclude
+        in: query
+        required: false
+        description: Ensure result set excludes specific IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: include
+        in: query
+        required: false
+        description: Limit result set to specific IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: media_type
+        in: query
+        required: false
+        description: Limit result set to attachments of a particular media type or media types.
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - image
+            - video
+            - text
+            - application
+            - audio
+      - name: mime_type
+        in: query
+        required: false
+        description: Limit result set to attachments of a particular MIME type or MIME types.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: modified_after
+        in: query
+        required: false
+        description: Limit response to posts modified after a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: modified_before
+        in: query
+        required: false
+        description: Limit response to posts modified before a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: offset
+        in: query
+        required: false
+        description: Offset the result set by a specific number of items.
+        schema:
+          type: integer
+      - name: order
+        in: query
+        required: false
+        description: Order sort attribute ascending or descending.
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      - name: orderby
+        in: query
+        required: false
+        description: Sort collection by post attribute.
+        schema:
+          type: string
+          enum:
+          - author
+          - date
+          - id
+          - include
+          - modified
+          - parent
+          - relevance
+          - slug
+          - include_slugs
+          - title
+          default: date
+      - name: page
+        in: query
+        required: false
+        description: Current page of the collection.
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: parent
+        in: query
+        required: false
+        description: Limit result set to items with particular parent IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: parent_exclude
+        in: query
+        required: false
+        description: Limit result set to all items except those of a particular parent ID.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: per_page
+        in: query
+        required: false
+        description: Maximum number of items to be returned in result set.
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+      - name: search
+        in: query
+        required: false
+        description: Limit results to those matching a string.
+        schema:
+          type: string
+      - name: search_columns
+        in: query
+        required: false
+        description: Array of column names to be searched.
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - post_title
+            - post_content
+            - post_excerpt
+          default: []
+      - name: search_semantics
+        in: query
+        required: false
+        description: How to interpret the search input.
+        schema:
+          type: string
+          enum:
+          - exact
+      - name: slug
+        in: query
+        required: false
+        description: Limit result set to posts with one or more specific slugs.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: status
+        in: query
+        required: false
+        description: Limit result set to posts assigned one or more statuses.
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - inherit
+            - private
+            - trash
+          default:
+          - inherit
+  /wp/v2/media/{id}:
+    get:
+      operationId: getMediaItem
+      summary: Retrieve a media item
+      description: Media item exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Media
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the post.
+        schema:
+          type: integer
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+  /wp/v2/partner:
+    get:
+      operationId: listPartners
+      summary: List marketplace partners
+      description: Marketplace partners exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Marketplace
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 pagination links (rel="next" / rel="prev").
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: after
+        in: query
+        required: false
+        description: Limit response to posts published after a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: before
+        in: query
+        required: false
+        description: Limit response to posts published before a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: benefit_types
+        in: query
+        required: false
+        description: Limit result set to items with specific terms assigned in the benefit_types taxonomy.
+        schema:
+          type: object
+      - name: benefit_types_exclude
+        in: query
+        required: false
+        description: Limit result set to items except those with specific terms assigned in the benefit_types
+          taxonomy.
+        schema:
+          type: object
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+      - name: exclude
+        in: query
+        required: false
+        description: Ensure result set excludes specific IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: include
+        in: query
+        required: false
+        description: Limit result set to specific IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: modified_after
+        in: query
+        required: false
+        description: Limit response to posts modified after a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: modified_before
+        in: query
+        required: false
+        description: Limit response to posts modified before a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: offset
+        in: query
+        required: false
+        description: Offset the result set by a specific number of items.
+        schema:
+          type: integer
+      - name: order
+        in: query
+        required: false
+        description: Order sort attribute ascending or descending.
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      - name: orderby
+        in: query
+        required: false
+        description: Sort collection by post attribute.
+        schema:
+          type: string
+          enum:
+          - author
+          - date
+          - id
+          - include
+          - modified
+          - parent
+          - relevance
+          - slug
+          - include_slugs
+          - title
+          default: date
+      - name: page
+        in: query
+        required: false
+        description: Current page of the collection.
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: partner_types
+        in: query
+        required: false
+        description: Limit result set to items with specific terms assigned in the partner_types taxonomy.
+        schema:
+          type: object
+      - name: partner_types_exclude
+        in: query
+        required: false
+        description: Limit result set to items except those with specific terms assigned in the partner_types
+          taxonomy.
+        schema:
+          type: object
+      - name: per_page
+        in: query
+        required: false
+        description: Maximum number of items to be returned in result set.
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+      - name: search
+        in: query
+        required: false
+        description: Limit results to those matching a string.
+        schema:
+          type: string
+      - name: search_columns
+        in: query
+        required: false
+        description: Array of column names to be searched.
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - post_title
+            - post_content
+            - post_excerpt
+          default: []
+      - name: search_semantics
+        in: query
+        required: false
+        description: How to interpret the search input.
+        schema:
+          type: string
+          enum:
+          - exact
+      - name: slug
+        in: query
+        required: false
+        description: Limit result set to posts with one or more specific slugs.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: status
+        in: query
+        required: false
+        description: Limit result set to posts assigned one or more statuses.
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - publish
+            - future
+            - draft
+            - pending
+            - private
+            - trash
+            - auto-draft
+            - inherit
+            - request-pending
+            - request-confirmed
+            - request-failed
+            - request-completed
+            - acf-disabled
+            - any
+          default:
+          - publish
+      - name: tax_relation
+        in: query
+        required: false
+        description: Limit result set based on relationship between multiple taxonomies.
+        schema:
+          type: string
+          enum:
+          - AND
+          - OR
+  /wp/v2/partner/{id}:
+    get:
+      operationId: getPartner
+      summary: Retrieve a marketplace partner
+      description: Marketplace partner exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Marketplace
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the post.
+        schema:
+          type: integer
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+      - name: excerpt_length
+        in: query
+        required: false
+        description: Override the default excerpt length.
+        schema:
+          type: integer
+      - name: password
+        in: query
+        required: false
+        description: The password for the post if it is password protected.
+        schema:
+          type: string
+  /wp/v2/partner_types:
+    get:
+      operationId: listPartnerTypes
+      summary: List partner type terms
+      description: Partner type terms exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Marketplace
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 pagination links (rel="next" / rel="prev").
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+      - name: exclude
+        in: query
+        required: false
+        description: Ensure result set excludes specific IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: hide_empty
+        in: query
+        required: false
+        description: Whether to hide terms not assigned to any posts.
+        schema:
+          type: boolean
+          default: false
+      - name: include
+        in: query
+        required: false
+        description: Limit result set to specific IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: offset
+        in: query
+        required: false
+        description: Offset the result set by a specific number of items.
+        schema:
+          type: integer
+      - name: order
+        in: query
+        required: false
+        description: Order sort attribute ascending or descending.
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+      - name: orderby
+        in: query
+        required: false
+        description: Sort collection by term attribute.
+        schema:
+          type: string
+          enum:
+          - id
+          - include
+          - name
+          - slug
+          - include_slugs
+          - term_group
+          - description
+          - count
+          default: name
+      - name: page
+        in: query
+        required: false
+        description: Current page of the collection.
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: per_page
+        in: query
+        required: false
+        description: Maximum number of items to be returned in result set.
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+      - name: post
+        in: query
+        required: false
+        description: Limit result set to terms assigned to a specific post.
+        schema:
+          type: integer
+      - name: search
+        in: query
+        required: false
+        description: Limit results to those matching a string.
+        schema:
+          type: string
+      - name: slug
+        in: query
+        required: false
+        description: Limit result set to terms with one or more specific slugs.
+        schema:
+          type: array
+          items:
+            type: string
+  /wp/v2/partner_types/{id}:
+    get:
+      operationId: getPartnerType
+      summary: Retrieve a partner type term
+      description: Partner type term exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Marketplace
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the term.
+        schema:
+          type: integer
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+  /wp/v2/benefit_types:
+    get:
+      operationId: listBenefitTypes
+      summary: List benefit type terms
+      description: Benefit type terms exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Marketplace
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 pagination links (rel="next" / rel="prev").
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+      - name: exclude
+        in: query
+        required: false
+        description: Ensure result set excludes specific IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: hide_empty
+        in: query
+        required: false
+        description: Whether to hide terms not assigned to any posts.
+        schema:
+          type: boolean
+          default: false
+      - name: include
+        in: query
+        required: false
+        description: Limit result set to specific IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: offset
+        in: query
+        required: false
+        description: Offset the result set by a specific number of items.
+        schema:
+          type: integer
+      - name: order
+        in: query
+        required: false
+        description: Order sort attribute ascending or descending.
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+      - name: orderby
+        in: query
+        required: false
+        description: Sort collection by term attribute.
+        schema:
+          type: string
+          enum:
+          - id
+          - include
+          - name
+          - slug
+          - include_slugs
+          - term_group
+          - description
+          - count
+          default: name
+      - name: page
+        in: query
+        required: false
+        description: Current page of the collection.
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: per_page
+        in: query
+        required: false
+        description: Maximum number of items to be returned in result set.
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+      - name: post
+        in: query
+        required: false
+        description: Limit result set to terms assigned to a specific post.
+        schema:
+          type: integer
+      - name: search
+        in: query
+        required: false
+        description: Limit results to those matching a string.
+        schema:
+          type: string
+      - name: slug
+        in: query
+        required: false
+        description: Limit result set to terms with one or more specific slugs.
+        schema:
+          type: array
+          items:
+            type: string
+  /wp/v2/benefit_types/{id}:
+    get:
+      operationId: getBenefitType
+      summary: Retrieve a benefit type term
+      description: Benefit type term exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Marketplace
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the term.
+        schema:
+          type: integer
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+  /wp/v2/event:
+    get:
+      operationId: listEvents
+      summary: List events
+      description: Events exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Events
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 pagination links (rel="next" / rel="prev").
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: after
+        in: query
+        required: false
+        description: Limit response to posts published after a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: before
+        in: query
+        required: false
+        description: Limit response to posts published before a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+      - name: event_cat
+        in: query
+        required: false
+        description: Limit result set to items with specific terms assigned in the event_cat taxonomy.
+        schema:
+          type: object
+      - name: event_cat_exclude
+        in: query
+        required: false
+        description: Limit result set to items except those with specific terms assigned in the event_cat
+          taxonomy.
+        schema:
+          type: object
+      - name: exclude
+        in: query
+        required: false
+        description: Ensure result set excludes specific IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: include
+        in: query
+        required: false
+        description: Limit result set to specific IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: modified_after
+        in: query
+        required: false
+        description: Limit response to posts modified after a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: modified_before
+        in: query
+        required: false
+        description: Limit response to posts modified before a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: offset
+        in: query
+        required: false
+        description: Offset the result set by a specific number of items.
+        schema:
+          type: integer
+      - name: order
+        in: query
+        required: false
+        description: Order sort attribute ascending or descending.
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      - name: orderby
+        in: query
+        required: false
+        description: Sort collection by post attribute.
+        schema:
+          type: string
+          enum:
+          - author
+          - date
+          - id
+          - include
+          - modified
+          - parent
+          - relevance
+          - slug
+          - include_slugs
+          - title
+          default: date
+      - name: page
+        in: query
+        required: false
+        description: Current page of the collection.
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: per_page
+        in: query
+        required: false
+        description: Maximum number of items to be returned in result set.
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+      - name: search
+        in: query
+        required: false
+        description: Limit results to those matching a string.
+        schema:
+          type: string
+      - name: search_columns
+        in: query
+        required: false
+        description: Array of column names to be searched.
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - post_title
+            - post_content
+            - post_excerpt
+          default: []
+      - name: search_semantics
+        in: query
+        required: false
+        description: How to interpret the search input.
+        schema:
+          type: string
+          enum:
+          - exact
+      - name: slug
+        in: query
+        required: false
+        description: Limit result set to posts with one or more specific slugs.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: status
+        in: query
+        required: false
+        description: Limit result set to posts assigned one or more statuses.
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - publish
+            - future
+            - draft
+            - pending
+            - private
+            - trash
+            - auto-draft
+            - inherit
+            - request-pending
+            - request-confirmed
+            - request-failed
+            - request-completed
+            - acf-disabled
+            - any
+          default:
+          - publish
+      - name: tax_relation
+        in: query
+        required: false
+        description: Limit result set based on relationship between multiple taxonomies.
+        schema:
+          type: string
+          enum:
+          - AND
+          - OR
+  /wp/v2/event/{id}:
+    get:
+      operationId: getEvent
+      summary: Retrieve a event
+      description: Event exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Events
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the post.
+        schema:
+          type: integer
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+      - name: excerpt_length
+        in: query
+        required: false
+        description: Override the default excerpt length.
+        schema:
+          type: integer
+      - name: password
+        in: query
+        required: false
+        description: The password for the post if it is password protected.
+        schema:
+          type: string
+  /wp/v2/event_cat:
+    get:
+      operationId: listEventCategories
+      summary: List event category terms
+      description: Event category terms exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Events
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 pagination links (rel="next" / rel="prev").
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+      - name: exclude
+        in: query
+        required: false
+        description: Ensure result set excludes specific IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: hide_empty
+        in: query
+        required: false
+        description: Whether to hide terms not assigned to any posts.
+        schema:
+          type: boolean
+          default: false
+      - name: include
+        in: query
+        required: false
+        description: Limit result set to specific IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: offset
+        in: query
+        required: false
+        description: Offset the result set by a specific number of items.
+        schema:
+          type: integer
+      - name: order
+        in: query
+        required: false
+        description: Order sort attribute ascending or descending.
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+      - name: orderby
+        in: query
+        required: false
+        description: Sort collection by term attribute.
+        schema:
+          type: string
+          enum:
+          - id
+          - include
+          - name
+          - slug
+          - include_slugs
+          - term_group
+          - description
+          - count
+          default: name
+      - name: page
+        in: query
+        required: false
+        description: Current page of the collection.
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: per_page
+        in: query
+        required: false
+        description: Maximum number of items to be returned in result set.
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+      - name: post
+        in: query
+        required: false
+        description: Limit result set to terms assigned to a specific post.
+        schema:
+          type: integer
+      - name: search
+        in: query
+        required: false
+        description: Limit results to those matching a string.
+        schema:
+          type: string
+      - name: slug
+        in: query
+        required: false
+        description: Limit result set to terms with one or more specific slugs.
+        schema:
+          type: array
+          items:
+            type: string
+  /wp/v2/event_cat/{id}:
+    get:
+      operationId: getEventCategory
+      summary: Retrieve a event category term
+      description: Event category term exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Events
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the term.
+        schema:
+          type: integer
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+  /wp/v2/testimonials:
+    get:
+      operationId: listTestimonials
+      summary: List customer testimonials
+      description: Customer testimonials exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Testimonials
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 pagination links (rel="next" / rel="prev").
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: after
+        in: query
+        required: false
+        description: Limit response to posts published after a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: before
+        in: query
+        required: false
+        description: Limit response to posts published before a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+      - name: exclude
+        in: query
+        required: false
+        description: Ensure result set excludes specific IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: include
+        in: query
+        required: false
+        description: Limit result set to specific IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: modified_after
+        in: query
+        required: false
+        description: Limit response to posts modified after a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: modified_before
+        in: query
+        required: false
+        description: Limit response to posts modified before a given ISO8601 compliant date.
+        schema:
+          type: string
+          format: date-time
+      - name: offset
+        in: query
+        required: false
+        description: Offset the result set by a specific number of items.
+        schema:
+          type: integer
+      - name: order
+        in: query
+        required: false
+        description: Order sort attribute ascending or descending.
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: desc
+      - name: orderby
+        in: query
+        required: false
+        description: Sort collection by post attribute.
+        schema:
+          type: string
+          enum:
+          - author
+          - date
+          - id
+          - include
+          - modified
+          - parent
+          - relevance
+          - slug
+          - include_slugs
+          - title
+          default: date
+      - name: page
+        in: query
+        required: false
+        description: Current page of the collection.
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: per_page
+        in: query
+        required: false
+        description: Maximum number of items to be returned in result set.
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+      - name: search
+        in: query
+        required: false
+        description: Limit results to those matching a string.
+        schema:
+          type: string
+      - name: search_columns
+        in: query
+        required: false
+        description: Array of column names to be searched.
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - post_title
+            - post_content
+            - post_excerpt
+          default: []
+      - name: search_semantics
+        in: query
+        required: false
+        description: How to interpret the search input.
+        schema:
+          type: string
+          enum:
+          - exact
+      - name: slug
+        in: query
+        required: false
+        description: Limit result set to posts with one or more specific slugs.
+        schema:
+          type: array
+          items:
+            type: string
+      - name: status
+        in: query
+        required: false
+        description: Limit result set to posts assigned one or more statuses.
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - publish
+            - future
+            - draft
+            - pending
+            - private
+            - trash
+            - auto-draft
+            - inherit
+            - request-pending
+            - request-confirmed
+            - request-failed
+            - request-completed
+            - acf-disabled
+            - any
+          default:
+          - publish
+  /wp/v2/testimonials/{id}:
+    get:
+      operationId: getTestimonial
+      summary: Retrieve a customer testimonial
+      description: Customer testimonial exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Testimonials
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the post.
+        schema:
+          type: integer
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+      - name: password
+        in: query
+        required: false
+        description: The password for the post if it is password protected.
+        schema:
+          type: string
+  /wp/v2/categories:
+    get:
+      operationId: listCategories
+      summary: List blog categories
+      description: Blog categories exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Taxonomy
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 pagination links (rel="next" / rel="prev").
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+      - name: exclude
+        in: query
+        required: false
+        description: Ensure result set excludes specific IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: hide_empty
+        in: query
+        required: false
+        description: Whether to hide terms not assigned to any posts.
+        schema:
+          type: boolean
+          default: false
+      - name: include
+        in: query
+        required: false
+        description: Limit result set to specific IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: order
+        in: query
+        required: false
+        description: Order sort attribute ascending or descending.
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+      - name: orderby
+        in: query
+        required: false
+        description: Sort collection by term attribute.
+        schema:
+          type: string
+          enum:
+          - id
+          - include
+          - name
+          - slug
+          - include_slugs
+          - term_group
+          - description
+          - count
+          default: name
+      - name: page
+        in: query
+        required: false
+        description: Current page of the collection.
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: parent
+        in: query
+        required: false
+        description: Limit result set to terms assigned to a specific parent.
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        required: false
+        description: Maximum number of items to be returned in result set.
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+      - name: post
+        in: query
+        required: false
+        description: Limit result set to terms assigned to a specific post.
+        schema:
+          type: integer
+      - name: search
+        in: query
+        required: false
+        description: Limit results to those matching a string.
+        schema:
+          type: string
+      - name: slug
+        in: query
+        required: false
+        description: Limit result set to terms with one or more specific slugs.
+        schema:
+          type: array
+          items:
+            type: string
+  /wp/v2/categories/{id}:
+    get:
+      operationId: getCategory
+      summary: Retrieve a blog category
+      description: Blog category exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Taxonomy
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the term.
+        schema:
+          type: integer
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+  /wp/v2/tags:
+    get:
+      operationId: listTags
+      summary: List blog tags
+      description: Blog tags exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Taxonomy
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 pagination links (rel="next" / rel="prev").
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+      - name: exclude
+        in: query
+        required: false
+        description: Ensure result set excludes specific IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: hide_empty
+        in: query
+        required: false
+        description: Whether to hide terms not assigned to any posts.
+        schema:
+          type: boolean
+          default: false
+      - name: include
+        in: query
+        required: false
+        description: Limit result set to specific IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: offset
+        in: query
+        required: false
+        description: Offset the result set by a specific number of items.
+        schema:
+          type: integer
+      - name: order
+        in: query
+        required: false
+        description: Order sort attribute ascending or descending.
+        schema:
+          type: string
+          enum:
+          - asc
+          - desc
+          default: asc
+      - name: orderby
+        in: query
+        required: false
+        description: Sort collection by term attribute.
+        schema:
+          type: string
+          enum:
+          - id
+          - include
+          - name
+          - slug
+          - include_slugs
+          - term_group
+          - description
+          - count
+          default: name
+      - name: page
+        in: query
+        required: false
+        description: Current page of the collection.
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: per_page
+        in: query
+        required: false
+        description: Maximum number of items to be returned in result set.
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+      - name: post
+        in: query
+        required: false
+        description: Limit result set to terms assigned to a specific post.
+        schema:
+          type: integer
+      - name: search
+        in: query
+        required: false
+        description: Limit results to those matching a string.
+        schema:
+          type: string
+      - name: slug
+        in: query
+        required: false
+        description: Limit result set to terms with one or more specific slugs.
+        schema:
+          type: array
+          items:
+            type: string
+  /wp/v2/tags/{id}:
+    get:
+      operationId: getTag
+      summary: Retrieve a blog tag
+      description: Blog tag exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Taxonomy
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: Unique identifier for the term.
+        schema:
+          type: integer
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+  /wp/v2/types:
+    get:
+      operationId: listTypes
+      summary: List content types
+      description: Content types exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Discovery
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 pagination links (rel="next" / rel="prev").
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+  /wp/v2/types/{type}:
+    get:
+      operationId: getType
+      summary: Retrieve a content type
+      description: Content type exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Discovery
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: type
+        in: path
+        required: true
+        description: An alphanumeric identifier for the post type.
+        schema:
+          type: string
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+  /wp/v2/taxonomies:
+    get:
+      operationId: listTaxonomies
+      summary: List taxonomies
+      description: Taxonomies exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Discovery
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 pagination links (rel="next" / rel="prev").
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+      - name: type
+        in: query
+        required: false
+        description: Limit results to taxonomies associated with a specific post type.
+        schema:
+          type: string
+  /wp/v2/taxonomies/{taxonomy}:
+    get:
+      operationId: getTaxonomy
+      summary: Retrieve a taxonomy
+      description: Taxonomy exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Discovery
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: taxonomy
+        in: path
+        required: true
+        description: An alphanumeric identifier for the taxonomy.
+        schema:
+          type: string
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+  /wp/v2/statuses:
+    get:
+      operationId: listStatuses
+      summary: List post statuses
+      description: Post statuses exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Discovery
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 pagination links (rel="next" / rel="prev").
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          - edit
+          default: view
+  /wp/v2/search:
+    get:
+      operationId: search
+      summary: Search published site content
+      description: Search results exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - Search
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 pagination links (rel="next" / rel="prev").
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: context
+        in: query
+        required: false
+        description: Scope under which the request is made; determines fields present in response.
+        schema:
+          type: string
+          enum:
+          - view
+          - embed
+          default: view
+      - name: exclude
+        in: query
+        required: false
+        description: Ensure result set excludes specific IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: include
+        in: query
+        required: false
+        description: Limit result set to specific IDs.
+        schema:
+          type: array
+          items:
+            type: integer
+          default: []
+      - name: page
+        in: query
+        required: false
+        description: Current page of the collection.
+        schema:
+          type: integer
+          default: 1
+          minimum: 1
+      - name: per_page
+        in: query
+        required: false
+        description: Maximum number of items to be returned in result set.
+        schema:
+          type: integer
+          default: 10
+          minimum: 1
+          maximum: 100
+      - name: search
+        in: query
+        required: false
+        description: Limit results to those matching a string.
+        schema:
+          type: string
+      - name: subtype
+        in: query
+        required: false
+        description: Limit results to items of one or more object subtypes.
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - post
+            - page
+            - elementor_library
+            - elementskit_content
+            - elementskit_template
+            - event
+            - testimonials
+            - partner
+            - category
+            - post_tag
+            - event_cat
+            - benefit_types
+            - partner_types
+            - any
+          default:
+          - any
+      - name: type
+        in: query
+        required: false
+        description: Limit results to items of an object type.
+        schema:
+          type: string
+          enum:
+          - post
+          - term
+          - post-format
+          default: post
+  /oembed/1.0/embed:
+    get:
+      operationId: getOembed
+      summary: Retrieve the oEmbed representation of an ease.com URL
+      description: oEmbed response exposed anonymously by the public ease.com WordPress REST API.
+      tags:
+      - oEmbed
+      security:
+      - {}
+      responses:
+        '200':
+          description: Successful response.
+          headers:
+            X-WP-Total:
+              description: Total number of matching records.
+              schema:
+                type: integer
+            X-WP-TotalPages:
+              description: Total number of pages available.
+              schema:
+                type: integer
+            Link:
+              description: RFC 8288 pagination links (rel="next" / rel="prev").
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+        '400':
+          description: Invalid parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Authentication required for this resource.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: No route or resource matched the request.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+      - name: format
+        in: query
+        required: false
+        schema:
+          type: string
+          default: json
+      - name: maxwidth
+        in: query
+        required: false
+        schema:
+          type: string
+          default: '600'
+      - name: url
+        in: query
+        required: true
+        description: The URL of the resource for which to fetch oEmbed data.
+        schema:
+          type: string
+          format: uri
+components:
+  securitySchemes:
+    applicationPassword:
+      type: http
+      scheme: basic
+      description: WordPress Application Passwords, advertised by the site itself in the "authentication"
+        block of https://www.ease.com/wp-json/ (authorization endpoint https://www.ease.com/wp-admin/authorize-application.php).
+        Required only for write and administrative routes, which are out of scope for this document; every
+        operation here is anonymous.
+  schemas:
+    Error:
+      type: object
+      description: The WordPress REST error envelope, observed live on 2026-07-25.
+      properties:
+        code:
+          type: string
+          examples:
+          - rest_cannot_access
+          - rest_no_route
+        message:
+          type: string
+          examples:
+          - Only authenticated users can access the User endpoint REST API.
+        data:
+          type: object
+          properties:
+            status:
+              type: integer
+              examples:
+              - 401
+      required:
+      - code
+      - message
+      - data

@@ -1,0 +1,52 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Ease Status API
+  version: 1.0.0
+extends: openapi/ease-status-openapi.yml
+x-provenance:
+  generated: '2026-07-25'
+  method: generated
+  source: >-
+    API Evangelist enrichment round 2026-07-25; captures our annotations over the spec generated
+    from https://status.ease.com/api
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: ease
+    x-apievangelist-surface: status
+    x-apievangelist-enrichment-round: '2026-07-25'
+    x-vendor: Atlassian Statuspage
+    x-page-id: 13zw4w6v89nk
+    x-platform-sunset:
+      no_new_companies: '2027-01-01'
+      read_only: '2027-07-01'
+      announcement: https://www.employeenavigator.com/ease-platform-sunset-announcement/
+- target: $.info
+  update:
+    x-artifacts:
+      webhooks: asyncapi/ease-status-webhooks.yml
+      lifecycle: lifecycle/ease-lifecycle.yml
+      conventions: conventions/ease-conventions.yml
+      data_model: data-model/ease-data-model.yml
+- target: $.paths['/summary.json'].get
+  update:
+    x-agent-hint: >-
+      One call that answers "is Ease up?" - returns the rollup indicator, all three components,
+      unresolved incidents and scheduled maintenance. Prefer it over polling the individual
+      endpoints.
+    x-verified: '2026-07-25'
+- target: $.paths['/incidents.json'].get
+  update:
+    x-record-count: 26
+    x-oldest-component-start: '2021-11-28'
+    x-verified: '2026-07-25'
+- target: $.paths['/components.json'].get
+  update:
+    x-components: [Web Application, API, Support]
+    x-verified: '2026-07-25'
+- target: $.paths['/summary.json'].get
+  update:
+    x-push-alternative: >-
+      Subscribe a webhook at https://status.ease.com/ to receive incident create/update/resolve
+      and component-status-change notifications instead of polling. See
+      asyncapi/ease-status-webhooks.yml.

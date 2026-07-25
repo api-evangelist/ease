@@ -1,0 +1,62 @@
+generated: '2026-07-25'
+method: derived
+source: openapi/ease-content-openapi.yml, openapi/ease-status-openapi.yml
+status: candidate
+summary: >-
+  No official hosted or remote Model Context Protocol server exists for Ease. Searches of the
+  Ease site, the MCP registry, npm @modelcontextprotocol, and every developer-shaped Ease
+  hostname found nothing, and Ease has no GitHub organization. The tool set below is DERIVED by
+  API Evangelist from the two public read surfaces as a proposal only. It is not published by
+  Ease and no MCPServer pointer is wired in apis.yml, because no server exists.
+server: null
+transport: null
+url: null
+auth:
+  type: none
+  note: Both backing surfaces are anonymous read-only.
+candidate_tools:
+- name: search_ease_marketplace_partners
+  description: Search and filter the Ease Marketplace partner directory (110 published partners).
+  source_operation: openapi/ease-content-openapi.yml#listPartners
+  maps_to: GET /wp/v2/partner
+- name: get_ease_marketplace_partner
+  description: Retrieve a single Ease Marketplace partner listing by id.
+  source_operation: openapi/ease-content-openapi.yml#getPartner
+  maps_to: GET /wp/v2/partner/{id}
+- name: list_ease_partner_types
+  description: List the 16 partner-type terms used to classify Marketplace partners.
+  source_operation: openapi/ease-content-openapi.yml#listPartnerTypes
+  maps_to: GET /wp/v2/partner_types
+- name: list_ease_benefit_types
+  description: List the 23 benefit-type terms, including EaseConnect and EaseConnect+ connection classes.
+  source_operation: openapi/ease-content-openapi.yml#listBenefitTypes
+  maps_to: GET /wp/v2/benefit_types
+- name: search_ease_content
+  description: Search published Ease site content across posts, pages and custom types.
+  source_operation: openapi/ease-content-openapi.yml#search
+  maps_to: GET /wp/v2/search
+- name: list_ease_blog_posts
+  description: List Ease blog posts, filterable by category, tag and date window.
+  source_operation: openapi/ease-content-openapi.yml#listPosts
+  maps_to: GET /wp/v2/posts
+- name: list_ease_events
+  description: List Ease in-person and virtual events.
+  source_operation: openapi/ease-content-openapi.yml#listEvents
+  maps_to: GET /wp/v2/event
+- name: get_ease_platform_status
+  description: Get the current Ease platform status indicator and description.
+  source_operation: openapi/ease-status-openapi.yml#getStatusRollup
+  maps_to: GET /status.json
+- name: get_ease_status_summary
+  description: Get the full Ease status summary - components, unresolved incidents, scheduled maintenance.
+  source_operation: openapi/ease-status-openapi.yml#getStatusSummary
+  maps_to: GET /summary.json
+- name: list_ease_incidents
+  description: List recent Ease incidents with their dated updates.
+  source_operation: openapi/ease-status-openapi.yml#listIncidents
+  maps_to: GET /incidents.json
+exclusions:
+  note: >-
+    No tool is proposed for any Ease benefits, enrollment, employer, employee, carrier or EDI 834
+    capability. Those surfaces are login-gated and privately negotiated; there is no public
+    operation to bind a tool to, and inventing one would be fabrication.

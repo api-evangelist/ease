@@ -1,0 +1,150 @@
+generated: '2026-07-25'
+method: searched
+source: >-
+  Live probes of https://www.ease.com/wp-json/ and https://status.ease.com/api/v2/ on
+  2026-07-25, plus the endpoint reference Ease publishes at https://status.ease.com/api
+summary: >-
+  Ease publishes two public, anonymous, machine-readable surfaces and neither is the benefits
+  administration API: the WordPress REST API behind the marketing site (www.ease.com/wp-json,
+  content plus the Marketplace partner directory) and the Atlassian Statuspage v2 API on
+  status.ease.com. The conventions below were verified against live responses. There is no
+  idempotency contract, no rate-limit signalling, no request-id header, and no RFC 9457 problem
+  envelope on either surface - absences recorded honestly rather than assumed.
+surfaces:
+- key: content
+  name: Ease Content & Marketplace API
+  base_url: https://www.ease.com/wp-json
+  openapi: openapi/ease-content-openapi.yml
+  style: WordPress REST API (wp/v2 namespace)
+- key: status
+  name: Ease Status API
+  base_url: https://status.ease.com/api/v2
+  openapi: openapi/ease-status-openapi.yml
+  style: Atlassian Statuspage v2
+authentication:
+  style: none for every published operation
+  content_api:
+    anonymous_read: true
+    write: >-
+      Write and administrative routes exist on the host (users, settings, plugins, themes, and
+      POST/PUT/PATCH/DELETE on content) but return HTTP 401 anonymously with
+      code rest_cannot_access / rest_forbidden. WordPress Application Passwords (HTTP Basic)
+      are advertised in the discovery document's authentication block, authorization endpoint
+      https://www.ease.com/wp-admin/authorize-application.php. These are site-administration
+      credentials, not a developer program.
+  status_api:
+    anonymous_read: true
+    write: not exposed
+  application:
+    note: >-
+      The Ease product itself (secure.ease.com) is username/password with mandatory two-factor
+      authentication and optional Okta SAML single sign-on on the Enterprise package. It is a
+      login wall, not an API auth scheme.
+    docs: https://www.ease.com/product/security/sso/
+  artifact: authentication/ease-authentication.yml
+idempotency:
+  supported: false
+  note: >-
+    Neither surface documents or accepts an idempotency key, and neither exposes a write
+    operation anonymously. No Idempotency-Key header, no idempotent-retry contract.
+pagination:
+  content_api:
+    style: page-number
+    params:
+    - name: page
+      default: 1
+      note: Requesting a page beyond the last returns 400 rest_post_invalid_page_number.
+    - name: per_page
+      default: 10
+      max: 100
+      note: Values outside 1-100 return 400 rest_invalid_param.
+    - name: offset
+      note: Alternative to page; offsets the result set.
+    response_headers:
+    - name: X-WP-Total
+      description: Total number of matching records.
+    - name: X-WP-TotalPages
+      description: Total number of pages available.
+    - name: Link
+      description: RFC 8288 links, rel="next" and rel="prev".
+    verified: 'GET /wp/v2/partner?per_page=2 returned X-WP-Total: 110, X-WP-TotalPages: 55 and a Link rel="next" header on 2026-07-25.'
+  status_api:
+    style: none
+    note: Collection endpoints return the 50 most recent records with no paging parameters.
+sparse_fields:
+  supported: true
+  param: _fields
+  example: /wp/v2/partner?per_page=1&_fields=id,slug
+  note: Comma-separated list of top-level fields; verified live.
+expansion:
+  supported: true
+  param: _embed
+  note: >-
+    Embeds linked resources (author, featured media, terms) into an _embedded block, driven by
+    the HAL-style _links object present on every record.
+  hypermedia:
+    field: _links
+    note: Every record carries _links with self, collection, about, and taxonomy relations.
+envelope:
+  supported: true
+  param: _envelope
+  note: >-
+    _envelope=1 wraps the response as {body, status, headers}, for clients that cannot read
+    response headers. Verified live on /wp/v2/statuses.
+filtering:
+  content_api:
+    search: '?search=<term> on any collection; /wp/v2/search for cross-type search.'
+    ordering: order (asc|desc) and orderby (date, id, title, slug, relevance, include, modified).
+    date_windows: after, before, modified_after, modified_before (ISO 8601).
+    taxonomy: >-
+      Custom post types filter by their taxonomies - partner accepts partner_types and
+      benefit_types (and the *_exclude variants). Verified:
+      /wp/v2/partner?partner_types=343 returned X-WP-Total: 4.
+    include_exclude: include[] and exclude[] take record ids; slug takes slugs.
+    context: context=view|embed|edit controls which fields are returned; edit requires auth.
+error_envelope:
+  format: WordPress REST error object (not RFC 9457)
+  content_type: application/json
+  shape:
+    code: machine-readable string, e.g. rest_invalid_param
+    message: human-readable string
+    data:
+      status: HTTP status code repeated in the body
+      params: per-parameter messages, present on validation failures
+      details: per-parameter {code, message, data} objects, present on validation failures
+  artifact: errors/ease-problem-types.yml
+  status_api:
+    note: The Statuspage v2 API returns plain HTTP status codes; no structured error envelope was observed.
+rate_limiting:
+  documented: false
+  headers_observed: []
+  note: >-
+    No RateLimit, X-RateLimit-*, or Retry-After headers were returned by either surface on
+    2026-07-25, and neither publishes a rate-limit policy. The site runs on WP Engine, which
+    applies its own platform-level protections that Ease does not document.
+request_tracing:
+  request_id_header: none observed
+versioning:
+  content_api:
+    scheme: uri-path namespace
+    current: wp/v2
+    discovery: 'https://www.ease.com/wp-json/ lists every registered namespace and route.'
+  status_api:
+    scheme: uri-path
+    current: v2
+  artifact: lifecycle/ease-lifecycle.yml
+content_negotiation:
+  request: JSON only; no Accept-driven format switching observed.
+  response: application/json; charset=UTF-8
+cors:
+  access_control_allow_headers: Authorization, X-WP-Nonce, Content-Disposition, Content-MD5, Content-Type
+  access_control_expose_headers: X-WP-Total, X-WP-TotalPages, Link
+  status_api_allow_origin: '*'
+robots:
+  note: 'The content API returns X-Robots-Tag: noindex on every response.'
+cross_links:
+  errors: errors/ease-problem-types.yml
+  lifecycle: lifecycle/ease-lifecycle.yml
+  authentication: authentication/ease-authentication.yml
+  webhooks: asyncapi/ease-status-webhooks.yml
+  data_model: data-model/ease-data-model.yml

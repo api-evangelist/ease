@@ -76,13 +76,42 @@ findings:
     compliance: HIPAA, SOC 2 Type II, HITRUST claimed on https://www.ease.com/product/security/sso/
   specifications:
     openapiHarvested: false
-    count: 0
+    count: 2
+    publishedByEase: 0
+    revised: '2026-07-25'
     note: |
-      No OpenAPI, Swagger, AsyncAPI, GraphQL SDL, or .proto artifact was found or
-      saved. The openapi/ directory is deliberately absent.
+      REVISED during the 2026-07-25 enrichment round. Ease still publishes no OpenAPI,
+      Swagger, AsyncAPI, GraphQL SDL or .proto of its own - the first finding stands for
+      the benefits platform. But the round-two contract hunt found two real, anonymous,
+      machine-readable read surfaces that the first pass missed because it only probed
+      developer-shaped paths:
+        1. https://www.ease.com/wp-json/ - the marketing site runs WordPress and serves
+           the full WordPress REST API anonymously, including a self-describing route
+           discovery document (253 routes). The wp/v2 namespace exposes the Ease
+           Marketplace as a custom post type: 110 partners, 16 partner_types, 23
+           benefit_types, plus 33 events, 17 testimonials, posts, pages and media. Saved
+           verbatim as openapi/ease-content-wp-routes-original.json and converted to
+           openapi/ease-content-openapi.yml (29 operations, derived).
+        2. https://status.ease.com/api/v2/ - the Ease status page is an Atlassian
+           Statuspage instance whose v2 JSON API is public and is documented by Ease
+           itself at https://status.ease.com/api. Captured as
+           openapi/ease-status-openapi.yml (8 operations, generated) with live responses
+           in examples/.
+      Both specs are API Evangelist artifacts, not Ease publications; provenance is
+      recorded in each info.x-provenance block. Neither is the benefits administration
+      API - that remains partner-gated and undocumented.
   webhooks:
-    documented: false
-    note: No public event catalog, webhook reference, or AsyncAPI document exists. Partner data egress is batch (scheduled report / SFTP), not event-driven.
+    documented: true
+    revised: '2026-07-25'
+    scope: status incidents only
+    note: |
+      REVISED during the 2026-07-25 enrichment round. The benefits platform still has no
+      event surface - partner data egress is batch (scheduled report / SFTP). However
+      https://status.ease.com/ offers anonymous webhook subscription (POST
+      /subscriptions/webhook.json) that fires "whenever Ease creates an incident, updates
+      an incident, resolves an incident or changes a component status", alongside Atom and
+      RSS feeds. Captured in asyncapi/ease-status-webhooks.yml. No AsyncAPI document
+      exists and none was authored - the payload schema is Atlassian's, not Ease's.
   postman:
     public: false
     note: Postman public search for "ease benefits" returned zero workspaces, collections, or APIs (2026-07-25).
@@ -220,10 +249,53 @@ sources:
 - url: https://www.ease.com/blog/employee-navigator-announces-acquisition-of-ease/
   type: Blog
   note: Acquisition by Employee Navigator announced 2023-04-04.
+- url: https://www.ease.com/wp-json/
+  type: OpenAPI
+  note: |
+    Found 2026-07-25. Live WordPress REST route discovery document, served anonymously,
+    253 routes across 19 namespaces. The wp/v2 namespace exposes the Ease Marketplace
+    (110 partners, 16 partner_types, 23 benefit_types), 33 events, 17 testimonials, posts,
+    pages and media - all readable without credentials. Administrative routes return 401.
+- url: https://status.ease.com/api
+  type: APIReference
+  note: |
+    Found 2026-07-25. Ease's own endpoint reference for the Statuspage v2 API on
+    status.ease.com - summary, status, components, incidents (unresolved and all) and
+    scheduled maintenances (upcoming, active, all). All eight verified 200 anonymously.
+- url: https://www.employeenavigator.com/ease-platform-sunset-announcement/
+  type: Deprecation
+  note: |
+    Found 2026-07-25, published 2026-06-03. Dated two-phase sunset of the Ease platform:
+    no new companies from 2027-01-01, read-only with integrations and support discontinued
+    from 2027-07-01. Migration tooling and training to Employee Navigator described.
+- url: https://www.employeenavigator.com/security/
+  type: TrustCenter
+  note: |
+    Found 2026-07-25 via the link on https://www.ease.com/product/security/. Ease "now
+    falls under Employee Navigator's security program", audited annually for SOC 2 Type II,
+    HITRUST, NIST, GDPR, 23 NYCRR 500 and CCPA.
 actions:
-  openapiDirectoryCreated: false
-  apisYmlApisEmpty: true
+  openapiDirectoryCreated: true
+  apisYmlApisEmpty: false
+  revised: '2026-07-25'
   reason: |
-    apis[] is intentionally empty. Ease publishes no public, documented, self-serve
-    API and no machine-readable specification, so there is nothing real to list.
-    Recording the absence accurately is the correct outcome for this record.
+    REVISED. The first pass left apis[] empty because Ease publishes no benefits API and
+    no developer portal - both still true. The 2026-07-25 enrichment round then ran the
+    full contract-discovery sweep against every host rather than only developer-shaped
+    paths, and found two genuinely public, anonymous, machine-readable read surfaces:
+    the www.ease.com WordPress REST API (which carries the Marketplace partner directory)
+    and the status.ease.com Statuspage v2 API. Both are now listed in apis[] with specs in
+    openapi/, live captures in examples/, and the usual conventions/errors/lifecycle/
+    data-model/skills artifacts derived from them. Neither is presented as an Ease
+    publication: the specs carry x-provenance blocks naming API Evangelist as the author
+    and the live source they were derived from.
+  notFound:
+    packages: No first-party SDK on npm, PyPI or any registry; no GitHub organization.
+    cli: None.
+    components: None.
+    sandbox: None - there is no test environment because there is no developer program.
+    scopes: No OAuth anywhere, so no scope surface (scopes/ deliberately absent).
+    grpc: None.
+    changelog: No dated product changelog is published publicly; the status page incident history is not one.
+    mcp: No MCP server. mcp/ease-mcp.yml holds a candidate tool list only and no MCPServer pointer is wired.
+    vulnerabilityDisclosure: No security.txt, bug bounty or responsible-disclosure page for ease.com or employeenavigator.com.

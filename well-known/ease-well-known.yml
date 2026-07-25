@@ -1,0 +1,82 @@
+generated: '2026-07-25'
+method: searched
+source: live probes of every Ease host on 2026-07-25
+summary: >-
+  Ease serves no first-party /.well-known/ document on any of its own hosts. Every
+  /.well-known/ path probed on www.ease.com, secure.ease.com (the customer application) and
+  api.ease.com (which resolves through wildcard DNS to the same sign-in page) returned 404,
+  and help.ease.com (Zendesk) returns 403 to anonymous requests. The one 200 recorded here is
+  served on status.ease.com, but it is the vendor's document, not Ease's: status.ease.com is an
+  Atlassian Statuspage instance and the security.txt it returns is Atlassian's own, canonical
+  to https://www.atlassian.com/.well-known/security.txt. It is captured verbatim for the record
+  and is explicitly NOT treated as an Ease vulnerability-disclosure policy.
+hosts:
+- host: https://www.ease.com
+  note: Marketing site, WordPress on WP Engine.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/gpc.json
+    status: 404
+- host: https://secure.ease.com
+  note: The Ease customer application sign-in host; developer.ease.com, developers.ease.com and api.ease.com all redirect here.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://api.ease.com
+  note: Wildcard DNS to the Ease application; not an API host.
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+- host: https://help.ease.com
+  note: Zendesk help center; anonymous requests are rejected with 403.
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/openid-configuration
+    status: 403
+  - path: /.well-known/api-catalog
+    status: 403
+- host: https://status.ease.com
+  note: Atlassian Statuspage instance (page id 13zw4w6v89nk).
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: ease-status-security.txt
+    owner: Atlassian (Statuspage vendor)
+    canonical: https://www.atlassian.com/.well-known/security.txt
+    first_party: false
+    note: >-
+      PGP-signed RFC 9116 document served by the Statuspage platform. Contacts and policy point
+      at Atlassian's vulnerability-reporting program, not at Ease or Enrollease, Inc.
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+first_party_documents: 0

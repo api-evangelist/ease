@@ -1,0 +1,52 @@
+generated: '2026-07-25'
+method: searched
+probe: true
+source: https://www.ease.com/product/security/
+url: https://www.employeenavigator.com/security/
+first_party: false
+note: >-
+  Ease hosts no trust center of its own. trust.ease.com and security.ease.com do not resolve to
+  a trust page, and the automated probe over ease.com/trust, /security and /compliance found no
+  qualifying page. What Ease does publish is a security page at
+  https://www.ease.com/product/security/ which states that, following Employee Navigator's
+  completion of the Ease acquisition on 2023-04-03, Ease "now falls under Employee Navigator's
+  security program" and links to the Employee Navigator security page. That page is therefore
+  the operative trust/compliance surface for Ease, recorded here with the ownership attribution
+  made explicit.
+ease_security_page: https://www.ease.com/product/security/
+certifications:
+- SOC 2 Type II
+- HITRUST
+- HIPAA
+- GDPR
+- CCPA
+- 23 NYCRR 500 (NYDFS)
+- NIST
+ease_claimed_certifications:
+- HIPAA
+- SOC 2 Type II
+- HITRUST CSF Certification
+ease_claimed_source: https://www.ease.com/product/security/sso/
+audit_cadence: annual
+audit_statement: >-
+  "Employee Navigator is audited annually for SOC2 Type II, HITRUST, NIST, GDPR, 23 NYCRR 500,
+  and CCPA." - https://www.employeenavigator.com/security/
+controls_published:
+- Personnel security and third-party background checks
+- Least-privilege access management
+- Third-party vulnerability and penetration testing (stated on the Ease SSO page)
+- Mandatory two-factor authentication for all Ease users
+- Okta SAML single sign-on on the Ease Enterprise package
+evidence:
+- source: https://www.ease.com/product/security/
+  keywords: [security program, employee navigator, data privacy and security by design]
+- source: https://www.ease.com/product/security/sso/
+  keywords: [hipaa, soc 2 type ii, hitrust, hitrust csf certification, two-factor authentication, penetration testing]
+- source: https://www.employeenavigator.com/security/
+  keywords: [soc 2 type ii, hitrust, nist, gdpr, 23 nycrr 500, ccpa, hipaa, compliance certifications and attestations]
+vulnerability_disclosure:
+  published: false
+  note: >-
+    No security.txt, no bug bounty, no security@ contact and no responsible-disclosure page was
+    found for ease.com or employeenavigator.com. See security/ease-domain-security.yml for the
+    probed transport posture. Security inquiries are routed through the Ease support team.

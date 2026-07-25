@@ -1,0 +1,77 @@
+generated: '2026-07-25'
+method: searched
+source: >-
+  openapi/ease-content-openapi.yml , openapi/ease-status-openapi.yml , the authentication block of
+  https://www.ease.com/wp-json/ , https://www.ease.com/product/security/sso/ , and live probes of
+  every Ease host on 2026-07-25
+docs: https://www.ease.com/product/security/sso/
+summary:
+  types:
+  - none
+  - http
+  api_key_in: []
+  oauth2_flows: []
+  public_read: true
+  developer_credentials_available: false
+statement: >-
+  Ease issues no developer credentials. Both of its public machine-readable surfaces - the
+  www.ease.com WordPress content API and the status.ease.com Statuspage v2 API - are fully
+  anonymous for every operation captured in this repo. The only authentication scheme advertised
+  anywhere is WordPress Application Passwords (HTTP Basic), which guards the site-administration
+  routes that are deliberately excluded from openapi/ease-content-openapi.yml. There is no OAuth
+  2.0, no OpenID Connect discovery, no API-key programme and no self-serve signup for any Ease
+  API. Access to the real integration surfaces - EaseConnect (X12 834), EaseConnect+ direct
+  carrier connections - is negotiated privately and administered behind the customer login.
+schemes:
+- name: anonymous
+  type: none
+  applies_to:
+  - openapi/ease-content-openapi.yml
+  - openapi/ease-status-openapi.yml
+  note: Every published operation returns 200 with no credentials. Verified live 2026-07-25.
+- name: applicationPassword
+  type: http
+  scheme: basic
+  description: >-
+    WordPress Application Passwords, advertised by the site itself in the "authentication" block
+    of https://www.ease.com/wp-json/ (authorization endpoint
+    https://www.ease.com/wp-admin/authorize-application.php). Site administration only; not a
+    developer program, and not required by any operation in this repo.
+  sources:
+  - openapi/ease-content-openapi.yml
+  applies_to_operations: none of the published operations
+negative_findings:
+  oauth2: 'No /.well-known/oauth-authorization-server on www.ease.com, secure.ease.com or api.ease.com (all 404).'
+  openid_connect: 'No /.well-known/openid-configuration on any Ease host (all 404).'
+  api_keys: No key issuance, key management or key documentation anywhere on ease.com.
+  mutual_tls: Not documented.
+  scopes: 'No OAuth scope surface exists; scopes/ is deliberately absent - scopes are OAuth-only.'
+application_authentication:
+  scope: The Ease product at secure.ease.com, not an API
+  factors:
+  - username and password
+  - mandatory two-factor authentication for all users
+  federation:
+    protocol: SAML 2.0
+    provider: Okta
+    availability: Enterprise pricing package
+    docs: https://www.ease.com/product/security/sso/
+  note: >-
+    developer.ease.com, developers.ease.com, api.ease.com and docs.ease.com all resolve through
+    wildcard DNS to this sign-in page. A 200 from those hostnames is a login wall, not an API.
+partner_authentication:
+  easeconnect:
+    mechanism: ANSI X12 EDI 834 file exchange, mapped per carrier inside the Ease application
+    access: customer/broker login
+  easeconnect_plus:
+    mechanism: privately negotiated direct data connection between Ease and a carrier
+    access: >-
+      arranged by Ease implementation analysts; includes an undocumented Evidence of Insurability
+      API and Member Benefits API in the Principal integration
+  partner_portal:
+    mechanism: scheduled reports downloaded from the portal or delivered over SFTP
+    access: partner login
+cross_links:
+  conventions: conventions/ease-conventions.yml
+  conformance: conformance/ease-conformance.yml
+  domain_security: security/ease-domain-security.yml

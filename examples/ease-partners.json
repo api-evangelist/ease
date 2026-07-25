@@ -1,0 +1,48 @@
+[
+    {
+        "id": 14132,
+        "date": "2023-09-01T10:08:03",
+        "modified": "2023-09-01T10:08:03",
+        "slug": "voya",
+        "link": "https://www.ease.com/marketplace/voya/",
+        "title": {
+            "rendered": "Voya"
+        },
+        "benefit_types": [],
+        "partner_types": [
+            333
+        ]
+    },
+    {
+        "id": 14113,
+        "date": "2023-06-05T13:03:15",
+        "modified": "2023-06-06T15:30:49",
+        "slug": "ebis",
+        "link": "https://www.ease.com/marketplace/ebis/",
+        "title": {
+            "rendered": "EBIS"
+        },
+        "benefit_types": [],
+        "partner_types": [
+            358,
+            420,
+            335
+        ]
+    },
+    {
+        "id": 14088,
+        "date": "2023-04-24T11:50:37",
+        "modified": "2023-04-24T11:50:37",
+        "slug": "anuvi",
+        "link": "https://www.ease.com/marketplace/anuvi/",
+        "title": {
+            "rendered": "Anuvi"
+        },
+        "benefit_types": [
+            419
+        ],
+        "partner_types": [
+            333
+        ]
+    }
+]

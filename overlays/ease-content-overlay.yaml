@@ -1,0 +1,61 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Ease Content & Marketplace API
+  version: 1.0.0
+extends: openapi/ease-content-openapi.yml
+x-provenance:
+  generated: '2026-07-25'
+  method: generated
+  source: >-
+    API Evangelist enrichment round 2026-07-25; captures our annotations over the spec derived
+    from https://www.ease.com/wp-json/
+actions:
+- target: $.info
+  update:
+    x-apievangelist-provider: ease
+    x-apievangelist-surface: content
+    x-apievangelist-enrichment-round: '2026-07-25'
+    x-apievangelist-note: >-
+      This is the marketing-site content API, not the Ease benefits administration API. Ease
+      publishes no developer portal; treat this surface as a discovery and directory resource
+      only.
+    x-platform-sunset:
+      no_new_companies: '2027-01-01'
+      read_only: '2027-07-01'
+      announcement: https://www.employeenavigator.com/ease-platform-sunset-announcement/
+- target: $.info
+  update:
+    x-artifacts:
+      conventions: conventions/ease-conventions.yml
+      errors: errors/ease-problem-types.yml
+      lifecycle: lifecycle/ease-lifecycle.yml
+      authentication: authentication/ease-authentication.yml
+      data_model: data-model/ease-data-model.yml
+      agentic_access: agentic-access/ease-agentic-access.yml
+- target: $.paths['/wp/v2/partner'].get
+  update:
+    x-record-count: 110
+    x-verified: '2026-07-25'
+    x-agent-hint: >-
+      The Ease Marketplace directory. Page with per_page (max 100) and read X-WP-Total /
+      X-WP-TotalPages; filter with partner_types and benefit_types term ids; trim payloads with
+      _fields to avoid the large yoast_head block.
+- target: $.paths['/wp/v2/partner_types'].get
+  update:
+    x-record-count: 16
+    x-verified: '2026-07-25'
+- target: $.paths['/wp/v2/benefit_types'].get
+  update:
+    x-record-count: 23
+    x-verified: '2026-07-25'
+    x-agent-hint: >-
+      This vocabulary encodes the Ease integration idiom - EaseConnect (X12 834 file mapping),
+      EaseConnect+ (direct carrier connection), COBRA Integration, HSA HRA & FSA Integration.
+- target: $.paths['/wp/v2/event'].get
+  update:
+    x-record-count: 33
+    x-verified: '2026-07-25'
+- target: $.paths['/wp/v2/testimonials'].get
+  update:
+    x-record-count: 17
+    x-verified: '2026-07-25'

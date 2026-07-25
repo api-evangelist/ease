@@ -1,0 +1,130 @@
+[
+    {
+        "id": 343,
+        "count": 4,
+        "description": "<span style=\"font-weight: 400\">Automate workflows, manage data, and gain efficiency with agency management systems.</span>",
+        "link": "https://www.ease.com/marketplace/partner_types/agency-management/",
+        "name": "Agency Management",
+        "slug": "agency-management"
+    },
+    {
+        "id": 339,
+        "count": 0,
+        "description": "<span style=\"font-weight: 400\">These partners make it easy to offer employees the benefits and resources they crave. </span>",
+        "link": "https://www.ease.com/marketplace/partner_types/benefits/",
+        "name": "Benefits",
+        "slug": "benefits"
+    },
+    {
+        "id": 358,
+        "count": 3,
+        "description": "",
+        "link": "https://www.ease.com/marketplace/partner_types/broker-support/",
+        "name": "Broker Support",
+        "slug": "broker-support"
+    },
+    {
+        "id": 373,
+        "count": 0,
+        "description": "Streamline employee benefits with direct connections from these Ease partners.",
+        "link": "https://www.ease.com/marketplace/partner_types/connections/",
+        "name": "Connections",
+        "slug": "connections"
+    },
+    {
+        "id": 420,
+        "count": 1,
+        "description": "",
+        "link": "https://www.ease.com/marketplace/partner_types/enrollment-assistance/",
+        "name": "Enrollment Assistance",
+        "slug": "enrollment-assistance"
+    },
+    {
+        "id": 415,
+        "count": 1,
+        "description": "",
+        "link": "https://www.ease.com/marketplace/partner_types/financial-wellness/",
+        "name": "Financial Wellness",
+        "slug": "financial-wellness"
+    },
+    {
+        "id": 335,
+        "count": 20,
+        "description": "Ease general agent partners provide the tools &amp; resources brokers need to operate more efficiently.",
+        "link": "https://www.ease.com/marketplace/partner_types/general-agency/",
+        "name": "General Agency",
+        "slug": "general-agency"
+    },
+    {
+        "id": 350,
+        "count": 0,
+        "description": "",
+        "link": "https://www.ease.com/marketplace/partner_types/identity-theft-protection/",
+        "name": "Identity Theft &amp; Protection",
+        "slug": "identity-theft-protection"
+    },
+    {
+        "id": 406,
+        "count": 0,
+        "description": "",
+        "link": "https://www.ease.com/marketplace/partner_types/isolved/",
+        "name": "isolved",
+        "slug": "isolved"
+    },
+    {
+        "id": 355,
+        "count": 1,
+        "description": "",
+        "link": "https://www.ease.com/marketplace/partner_types/life-insurance/",
+        "name": "Life Insurance",
+        "slug": "life-insurance"
+    },
+    {
+        "id": 330,
+        "count": 7,
+        "description": "Save time and eliminate redundancies with an integrated payroll solution.",
+        "link": "https://www.ease.com/marketplace/partner_types/payroll-provider/",
+        "name": "Payroll Provider",
+        "slug": "payroll-provider"
+    },
+    {
+        "id": 337,
+        "count": 8,
+        "description": "",
+        "link": "https://www.ease.com/marketplace/partner_types/tailored-benefit-plans/",
+        "name": "Tailored Benefit Plans",
+        "slug": "tailored-benefit-plans"
+    },
+    {
+        "id": 353,
+        "count": 3,
+        "description": "",
+        "link": "https://www.ease.com/marketplace/partner_types/telemedicine/",
+        "name": "Telemedicine",
+        "slug": "telemedicine"
+    },
+    {
+        "id": 351,
+        "count": 2,
+        "description": "",
+        "link": "https://www.ease.com/marketplace/partner_types/third-party-edi/",
+        "name": "Third Party EDI",
+        "slug": "third-party-edi"
+    },
+    {
+        "id": 333,
+        "count": 30,
+        "description": "From benefits enrollment and management to compliance and claims processing, count on the support of our third party administrators.",
+        "link": "https://www.ease.com/marketplace/partner_types/third-party-administrator/",
+        "name": "Third-Party Administrator",
+        "slug": "third-party-administrator"
+    },
+    {
+        "id": 371,
+        "count": 4,
+        "description": "Check out the latest and greatest from the Ease marketplace.",
+        "link": "https://www.ease.com/marketplace/partner_types/trending/",
+        "name": "Trending Partners",
+        "slug": "trending"
+    }
+]

@@ -1,0 +1,184 @@
+{
+    "post": {
+        "description": "",
+        "name": "Posts",
+        "slug": "post",
+        "rest_base": "posts",
+        "rest_namespace": "wp/v2",
+        "taxonomies": [
+            "category",
+            "post_tag"
+        ],
+        "hierarchical": false,
+        "has_archive": false
+    },
+    "page": {
+        "description": "",
+        "name": "Pages",
+        "slug": "page",
+        "rest_base": "pages",
+        "rest_namespace": "wp/v2",
+        "taxonomies": [],
+        "hierarchical": true,
+        "has_archive": false
+    },
+    "attachment": {
+        "description": "",
+        "name": "Media",
+        "slug": "attachment",
+        "rest_base": "media",
+        "rest_namespace": "wp/v2",
+        "taxonomies": [],
+        "hierarchical": false,
+        "has_archive": false
+    },
+    "nav_menu_item": {
+        "description": "",
+        "name": "Navigation Menu Items",
+        "slug": "nav_menu_item",
+        "rest_base": "menu-items",
+        "rest_namespace": "wp/v2",
+        "taxonomies": [
+            "nav_menu"
+        ],
+        "hierarchical": false,
+        "has_archive": false
+    },
+    "wp_block": {
+        "description": "",
+        "name": "Patterns",
+        "slug": "wp_block",
+        "rest_base": "blocks",
+        "rest_namespace": "wp/v2",
+        "taxonomies": [
+            "wp_pattern_category"
+        ],
+        "hierarchical": false,
+        "has_archive": false
+    },
+    "wp_template": {
+        "description": "Templates to include in your theme.",
+        "name": "Templates",
+        "slug": "wp_template",
+        "rest_base": "templates",
+        "rest_namespace": "wp/v2",
+        "taxonomies": [],
+        "hierarchical": false,
+        "has_archive": false
+    },
+    "wp_template_part": {
+        "description": "Template parts to include in your templates.",
+        "name": "Template Parts",
+        "slug": "wp_template_part",
+        "rest_base": "template-parts",
+        "rest_namespace": "wp/v2",
+        "taxonomies": [],
+        "hierarchical": false,
+        "has_archive": false
+    },
+    "wp_global_styles": {
+        "description": "Global styles to include in themes.",
+        "name": "Global Styles",
+        "slug": "wp_global_styles",
+        "rest_base": "global-styles",
+        "rest_namespace": "wp/v2",
+        "taxonomies": [],
+        "hierarchical": false,
+        "has_archive": false
+    },
+    "wp_navigation": {
+        "description": "Navigation menus that can be inserted into your site.",
+        "name": "Navigation Menus",
+        "slug": "wp_navigation",
+        "rest_base": "navigation",
+        "rest_namespace": "wp/v2",
+        "taxonomies": [],
+        "hierarchical": false,
+        "has_archive": false
+    },
+    "wp_font_family": {
+        "description": "",
+        "name": "Font Families",
+        "slug": "wp_font_family",
+        "rest_base": "font-families",
+        "rest_namespace": "wp/v2",
+        "taxonomies": [],
+        "hierarchical": false,
+        "has_archive": false
+    },
+    "wp_font_face": {
+        "description": "",
+        "name": "Font Faces",
+        "slug": "wp_font_face",
+        "rest_base": "font-families/(?P<font_family_id>[\\d]+)/font-faces",
+        "rest_namespace": "wp/v2",
+        "taxonomies": [],
+        "hierarchical": false,
+        "has_archive": false
+    },
+    "elementor_library": {
+        "description": "",
+        "name": "My Templates",
+        "slug": "elementor_library",
+        "rest_base": "elementor_library",
+        "rest_namespace": "wp/v2",
+        "taxonomies": [],
+        "hierarchical": false,
+        "has_archive": false
+    },
+    "elementskit_content": {
+        "description": "elementskit_content",
+        "name": "ElementsKit items",
+        "slug": "elementskit_content",
+        "rest_base": "elementskit-content",
+        "rest_namespace": "wp/v2",
+        "taxonomies": [],
+        "hierarchical": true,
+        "has_archive": false
+    },
+    "elementskit_template": {
+        "description": "",
+        "name": "Templates",
+        "slug": "elementskit_template",
+        "rest_base": "elementskit-template",
+        "rest_namespace": "wp/v2",
+        "taxonomies": [],
+        "hierarchical": false,
+        "has_archive": false
+    },
+    "event": {
+        "description": "",
+        "name": "Events",
+        "slug": "event",
+        "rest_base": "event",
+        "rest_namespace": "wp/v2",
+        "taxonomies": [
+            "event_cat"
+        ],
+        "hierarchical": false,
+        "has_archive": false
+    },
+    "testimonials": {
+        "description": "",
+        "name": "Testimonials",
+        "slug": "testimonials",
+        "rest_base": "testimonials",
+        "rest_namespace": "wp/v2",
+        "taxonomies": [],
+        "hierarchical": false,
+        "has_archive": false
+    },
+    "partner": {
+        "description": "",
+        "name": "Marketplace",
+        "slug": "partner",
+        "rest_base": "partner",
+        "rest_namespace": "wp/v2",
+        "taxonomies": [
+            "benefit_types",
+            "partner_types"
+        ],
+        "hierarchical": false,
+        "has_archive": false
+    }
+}

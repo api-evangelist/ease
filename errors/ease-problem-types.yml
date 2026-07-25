@@ -1,0 +1,73 @@
+generated: '2026-07-25'
+method: searched
+source: >-
+  Live error responses captured from https://www.ease.com/wp-json/ on 2026-07-25, cross-checked
+  against openapi/ease-content-openapi.yml
+format: wordpress-rest-error
+rfc9457: false
+note: >-
+  Neither Ease surface uses RFC 9457 application/problem+json. The content API returns the
+  standard WordPress REST error object as application/json; the Statuspage v2 status API returns
+  bare HTTP status codes with no structured error body. Every entry below was observed live, not
+  inferred from documentation.
+envelope:
+  content_type: application/json; charset=UTF-8
+  fields:
+  - name: code
+    type: string
+    description: Machine-readable error code.
+  - name: message
+    type: string
+    description: Human-readable message.
+  - name: data.status
+    type: integer
+    description: The HTTP status code, repeated in the body.
+  - name: data.params
+    type: object
+    description: Map of parameter name to failure message. Present on validation errors only.
+  - name: data.details
+    type: object
+    description: Map of parameter name to a nested {code, message, data} object. Present on validation errors only.
+problems:
+- code: rest_no_route
+  status: 404
+  title: No route was found matching the URL and request method.
+  observed: 'GET https://www.ease.com/wp-json/wp/v2/nope'
+  remediation: >-
+    Check the route against the discovery document at https://www.ease.com/wp-json/ - only the
+    routes in openapi/ease-content-openapi.yml are anonymously readable.
+- code: rest_invalid_param
+  status: 400
+  title: One or more parameters failed validation.
+  observed: 'GET https://www.ease.com/wp-json/wp/v2/partner?per_page=200'
+  detail: 'per_page must be between 1 (inclusive) and 100 (inclusive) - returned in data.params.per_page with data.details.per_page.code = rest_out_of_bounds.'
+  remediation: Clamp per_page to 1-100 and page through with the page parameter, reading X-WP-TotalPages.
+- code: rest_out_of_bounds
+  status: 400
+  title: A numeric parameter fell outside its allowed range.
+  note: Appears nested inside data.details rather than as the top-level code.
+  observed: 'GET https://www.ease.com/wp-json/wp/v2/partner?per_page=200'
+- code: rest_post_invalid_page_number
+  status: 400
+  title: The page number requested is larger than the number of pages available.
+  observed: 'GET https://www.ease.com/wp-json/wp/v2/partner?page=999'
+  remediation: Read X-WP-TotalPages from the first page and stop when the Link rel="next" header disappears.
+- code: rest_cannot_access
+  status: 401
+  title: Only authenticated users can access this endpoint.
+  observed: 'GET https://www.ease.com/wp-json/wp/v2/users'
+  remediation: >-
+    The endpoint exists but is not part of the public surface. Ease publishes no developer
+    credentials; do not attempt to authenticate against the site administration API.
+- code: rest_forbidden
+  status: 401
+  title: Sorry, you are not allowed to do that.
+  observed: 'GET https://www.ease.com/wp-json/wp/v2/settings'
+- code: rest_cannot_view_plugins
+  status: 401
+  title: Sorry, you are not allowed to manage plugins for this site.
+  observed: 'GET https://www.ease.com/wp-json/wp/v2/plugins'
+status_api:
+  note: >-
+    https://status.ease.com/api/v2/* returns 200 with JSON for every documented endpoint and a
+    plain HTML 404 for unknown paths. No JSON error envelope was observed.

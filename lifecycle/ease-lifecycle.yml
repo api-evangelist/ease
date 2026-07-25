@@ -1,0 +1,95 @@
+generated: '2026-07-25'
+method: searched
+source: >-
+  https://www.employeenavigator.com/ease-platform-sunset-announcement/ ,
+  https://www.ease.com/product/security/ , https://status.ease.com/ and live probes 2026-07-25
+summary: >-
+  Ease is a platform in announced end-of-life. Employee Navigator, which acquired Ease in April
+  2023, published a dated two-phase sunset on 2026-06-03: from 2027-01-01 no new companies can
+  be added to Ease, and from 2027-07-01 Ease goes read-only and integrations plus customer
+  support are discontinued. This is the single most important lifecycle fact about the provider
+  and it applies to the whole platform, including the private EaseConnect / EaseConnect+
+  integration surfaces, not just to an API version.
+platform_sunset:
+  announced: '2026-06-03'
+  announcement_url: https://www.employeenavigator.com/ease-platform-sunset-announcement/
+  announced_by: Employee Navigator (George Reese, CEO)
+  phases:
+  - date: '2027-01-01'
+    name: No new companies
+    effect: >-
+      New companies can no longer be added to Ease and the "Add Company" feature is disabled.
+      Existing companies are unaffected, including integrations, renewals and customer access.
+  - date: '2027-07-01'
+    name: Read-only sunset
+    effect: >-
+      Ease officially sunsets and transitions to read-only mode. Brokers, HR teams and employees
+      retain access to historical data and reporting tools; integrations and customer support
+      services for Ease are discontinued.
+  migration:
+    target: Employee Navigator
+    tooling: >-
+      A self-service migration tool moves companies from Ease to Employee Navigator; Employee
+      Navigator states it is used hundreds of times a day and that 95% of Ease companies were
+      eligible to upgrade without losing functionality as of the announcement.
+    training: >-
+      Weekly live virtual training through August 2026, in-person sessions, twice-monthly
+      migration-tool training, and monthly HR training.
+  integration_impact: >-
+    EaseConnect (ANSI X12 EDI 834 carrier files), EaseConnect+ direct carrier connections, and
+    the payroll/HRIS marketplace integrations are all in scope of the 2027-07-01 discontinuation.
+versioning:
+- surface: Ease Content & Marketplace API
+  scheme: uri-path namespace
+  current: wp/v2
+  discovery: https://www.ease.com/wp-json/
+  note: >-
+    WordPress core versioning, not an Ease product decision. The namespace list at the discovery
+    root is the authoritative version index.
+- surface: Ease Status API
+  scheme: uri-path
+  current: v2
+  docs: https://status.ease.com/api
+  note: Atlassian Statuspage versioning, not an Ease product decision.
+deprecation:
+  policy_url: https://www.employeenavigator.com/ease-platform-sunset-announcement/
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    Ease publishes no RFC 8594 Sunset/Deprecation header contract and no per-endpoint deprecation
+    policy. The deprecation posture is the platform-level sunset above, communicated by blog post
+    and by broker re-contracting starting Q2 2026.
+deprecated_operations: []
+status_page:
+  url: https://status.ease.com/
+  vendor: Atlassian Statuspage
+  page_id: 13zw4w6v89nk
+  components:
+  - Web Application
+  - API
+  - Support
+  api: https://status.ease.com/api/v2/summary.json
+  feeds:
+  - https://status.ease.com/history.rss
+  - https://status.ease.com/history.atom
+  subscriptions:
+  - email
+  - webhook
+  incident_history:
+    records_available: 26
+    oldest_captured: '2021-11-28'
+    most_recent: '2025-10-20'
+    most_recent_title: Service Disruption Notice due to AWS Outage - October 19-20, 2025
+sla:
+  url: null
+  uptime_target: null
+  note: No public SLA or uptime commitment is published; terms live in the customer SaaS agreement at https://www.ease.com/terms/.
+support:
+  help_center: https://help.ease.com/
+  note: Zendesk help center; anonymous access returns 403 and the Help Center API returns 401.
+ownership:
+  acquired_by: Employee Navigator
+  announced: '2023-04-04'
+  closed: '2023-04-03'
+  security_program: >-
+    Ease now falls under Employee Navigator's security program per https://www.ease.com/product/security/

@@ -12,22 +12,31 @@ description: >-
   agency management systems. Ease is a group-benefits distribution platform
   rather than a risk carrier, so its lines of business are medical, dental,
   vision, life, AD&D, STD, LTD and voluntary/supplemental products written by its
-  carrier partners. It was acquired by Employee Navigator in April 2023 and the
-  two products continue to run side by side. Its API posture is partner-gated
-  and closed: Ease publishes no public developer portal, no API reference and no
-  machine-readable specification. developer.ease.com, developers.ease.com,
-  api.ease.com and docs.ease.com all resolve through wildcard DNS to the Ease
-  application sign-in page (HTTP 200, title "Sign In"/"Login"), and
-  ease.com/developers, /api, /developer and /integrations return 404. The real
-  integration surface is EaseConnect (self-service mapping of ANSI X12 EDI 834
-  enrollment files to carriers), EaseConnect+ (privately negotiated direct
-  carrier data connections, which in the Principal integration include an
+  carrier partners. It was acquired by Employee Navigator in April 2023 and is
+  now in announced end-of-life: Employee Navigator published a dated two-phase
+  sunset on 2026-06-03 under which no new companies can be added to Ease from
+  2027-01-01 and the platform goes read-only, with integrations and support
+  discontinued, on 2027-07-01. Its benefits API posture is partner-gated and
+  closed: Ease publishes no public developer portal and no API reference for the
+  product. developer.ease.com, developers.ease.com, api.ease.com and
+  docs.ease.com all resolve through wildcard DNS to the Ease application sign-in
+  page, and ease.com/developers, /api, /developer and /integrations return 404.
+  The real integration surface is EaseConnect (self-service mapping of ANSI X12
+  EDI 834 enrollment files to carriers), EaseConnect+ (privately negotiated
+  direct carrier data connections, which in the Principal integration include an
   Evidence of Insurability API and a Member Benefits API that Ease never
   documents publicly), marketplace API integrations with payroll and HRIS
   vendors such as ADP Workforce Now, ADP RUN, BambooHR, Paycor and Paylocity,
-  and a partner portal whose data leaves by scheduled report or SFTP. No ACORD,
-  AL3, NGDS or IVANS reference appears anywhere on the site - Ease operates in
-  the group-benefits ANSI X12 834 idiom, not the P&C ACORD idiom.
+  and a partner portal whose data leaves by scheduled report or SFTP. Ease does
+  however operate two real, anonymous, machine-readable read surfaces that this
+  record captures: the WordPress REST API behind www.ease.com, which serves the
+  full Ease Marketplace partner directory (110 partners, 16 partner types, 23
+  benefit types) alongside blog, page, event and testimonial content; and the
+  Atlassian Statuspage v2 API on status.ease.com, which serves platform status,
+  component health, incident history and an anonymous incident-webhook
+  subscription. No ACORD, AL3, NGDS or IVANS reference appears anywhere on the
+  site - Ease operates in the group-benefits ANSI X12 834 idiom, not the P&C
+  ACORD idiom.
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
 - Insurance
@@ -42,11 +51,115 @@ tags:
 - EDI
 - Payroll
 - Human Resources
+- Marketplace
+- Status
 created: '2026-07-25'
 modified: '2026-07-25'
 specificationVersion: '0.19'
-apis: []
+apis:
+- name: Ease Content & Marketplace API
+  description: >-
+    The public, anonymous WordPress REST API behind www.ease.com. It is not the Ease benefits
+    administration API, but it is a real machine-readable surface and it carries the Ease
+    Marketplace: 110 published partner listings classified by 16 partner_types and 23
+    benefit_types (a vocabulary that encodes the Ease integration idiom itself - EaseConnect,
+    EaseConnect+, COBRA Integration, HSA HRA & FSA Integration). It also serves blog posts,
+    marketing pages, media, 33 events and 17 customer testimonials. Every operation captured
+    here was verified to return HTTP 200 anonymously on 2026-07-25; write and administrative
+    routes exist on the host but return 401 and are deliberately excluded.
+  humanURL: https://www.ease.com/marketplace/
+  baseURL: https://www.ease.com/wp-json
+  tags:
+  - Marketplace
+  - Content
+  - Partners
+  - Events
+  properties:
+  - type: OpenAPI
+    url: openapi/ease-content-openapi.yml
+  - type: Overlay
+    url: overlays/ease-content-overlay.yaml
+  - type: Examples
+    url: examples/ease-partners.json
+  - type: Examples
+    url: examples/ease-partner-types.json
+  - type: Examples
+    url: examples/ease-benefit-types.json
+  - type: Examples
+    url: examples/ease-content-types.json
+  - type: Documentation
+    url: https://www.ease.com/marketplace/
+- name: Ease Status API
+  description: >-
+    The public, anonymous Atlassian Statuspage v2 API for the Ease platform, hosted at
+    status.ease.com (page id 13zw4w6v89nk) and documented by Ease itself at
+    https://status.ease.com/api. Eight GET endpoints return the platform status rollup, the
+    three published components (Web Application, API, Support), open and historical incidents
+    with their dated updates, and scheduled maintenance windows. Anyone can also subscribe an
+    incident webhook, or the Atom/RSS feeds, without an account. This is the only first-party,
+    self-serve, machine-readable operational API Ease publishes.
+  humanURL: https://status.ease.com/
+  baseURL: https://status.ease.com/api/v2
+  tags:
+  - Status
+  - Incidents
+  - Operations
+  properties:
+  - type: OpenAPI
+    url: openapi/ease-status-openapi.yml
+  - type: Overlay
+    url: overlays/ease-status-overlay.yaml
+  - type: APIReference
+    url: https://status.ease.com/api
+  - type: Examples
+    url: examples/ease-status-summary.json
+  - type: Examples
+    url: examples/ease-status-components.json
+  - type: Examples
+    url: examples/ease-status-incidents.json
+  - type: Webhooks
+    url: asyncapi/ease-status-webhooks.yml
+  - type: StatusPage
+    url: https://status.ease.com/
 common:
+- type: AgenticAccess
+  url: agentic-access/ease-agentic-access.yml
+- type: Authentication
+  url: authentication/ease-authentication.yml
+- type: DomainSecurity
+  url: security/ease-domain-security.yml
+- type: Conventions
+  url: conventions/ease-conventions.yml
+- type: ErrorCatalog
+  url: errors/ease-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/ease-lifecycle.yml
+- type: Deprecation
+  url: https://www.employeenavigator.com/ease-platform-sunset-announcement/
+- type: Conformance
+  url: conformance/ease-conformance.yml
+- type: Compliance
+  url: https://www.ease.com/product/security/sso/
+- type: TrustCenter
+  url: security/ease-trust-center.yml
+- type: DataModel
+  url: data-model/ease-data-model.yml
+- type: WellKnown
+  url: well-known/ease-well-known.yml
+- type: Webhooks
+  url: asyncapi/ease-status-webhooks.yml
+- type: LLMsTxt
+  url: llms/ease-llms.txt
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Examples
+  url: examples/ease-partners.json
+- type: APIReference
+  url: https://status.ease.com/api
+- type: Documentation
+  url: https://help.ease.com/
+- type: Login
+  url: https://secure.ease.com/
 - type: Website
   url: https://www.ease.com/
 - type: Blog
@@ -57,6 +170,8 @@ common:
   url: https://www.linkedin.com/company/ease
 - type: Support
   url: https://www.ease.com/support/
+- type: HelpCenter
+  url: https://help.ease.com/
 - type: StatusPage
   url: https://status.ease.com/
 - type: Pricing

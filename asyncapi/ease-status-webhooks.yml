@@ -1,0 +1,72 @@
+generated: '2026-07-25'
+method: searched
+source: https://status.ease.com/
+spec_type: none
+summary: >-
+  Ease publishes no AsyncAPI document and no product event catalog. It does publish exactly one
+  real, self-serve, anonymous event surface: webhook notifications from its Atlassian Statuspage
+  instance at https://status.ease.com/. The subscription form on that page states verbatim -
+  "Get webhook notifications whenever Ease creates an incident, updates an incident, resolves an
+  incident or changes a component status." Anyone can subscribe by supplying a webhook URL and a
+  contact email; no Ease account or credential is required. This is an operational-status event
+  stream, not a benefits or enrollment event stream.
+asyncapi_document: null
+asyncapi_note: >-
+  No AsyncAPI spec is authored here. The payload schema below would have to be invented to write
+  one, and only Atlassian - not Ease - defines it; the surface is recorded as a webhook catalog
+  instead.
+webhooks:
+  provider_surface: Ease Status (Atlassian Statuspage, page id 13zw4w6v89nk)
+  subscribe_url: https://status.ease.com/
+  subscribe_endpoint: POST https://status.ease.com/subscriptions/webhook.json
+  subscribe_fields:
+  - name: Webhook URL
+    description: The URL Statuspage should send the webhooks to.
+  - name: Email address
+    description: Contact address, used to notify the subscriber if their endpoint fails.
+  captcha: reCAPTCHA on the subscription form
+  auth: none required to subscribe
+  transport: HTTP POST, JSON body, to the subscriber-supplied URL
+  events:
+  - name: incident.created
+    trigger: Ease creates an incident
+    source_text: '"whenever Ease creates an incident" - status.ease.com subscription form'
+  - name: incident.updated
+    trigger: Ease posts an update to an existing incident
+    source_text: '"updates an incident" - status.ease.com subscription form'
+  - name: incident.resolved
+    trigger: Ease resolves an incident
+    source_text: '"resolves an incident" - status.ease.com subscription form'
+  - name: component.status_changed
+    trigger: An Ease component (Web Application, API, Support) changes status
+    source_text: '"changes a component status" - status.ease.com subscription form'
+  payload_schema:
+    published_by_ease: false
+    note: >-
+      Ease does not publish the webhook payload. The payload is defined by Atlassian Statuspage
+      and is documented by the vendor, not by Ease. The polling equivalent - with schemas modelled
+      from live Ease responses - is openapi/ease-status-openapi.yml; the incident and component
+      objects delivered by webhook mirror the Incident and Component schemas there.
+    vendor_reference: https://status.ease.com/api
+  polling_alternative:
+    endpoints:
+    - https://status.ease.com/api/v2/summary.json
+    - https://status.ease.com/api/v2/incidents/unresolved.json
+    - https://status.ease.com/api/v2/components.json
+    openapi: openapi/ease-status-openapi.yml
+  feeds:
+  - url: https://status.ease.com/history.rss
+    format: RSS 2.0
+  - url: https://status.ease.com/history.atom
+    format: Atom 1.0
+  other_channels:
+  - email
+  - Slack
+  - Atom/RSS
+product_events:
+  documented: false
+  note: >-
+    The Ease benefits platform itself has no public event surface. Partner data leaves Ease by
+    scheduled report or SFTP from the partner portal, and enrollment data by ANSI X12 EDI 834
+    file (EaseConnect) or a privately negotiated direct carrier connection (EaseConnect+) - all
+    batch, all login-gated, none event-driven or publicly documented.

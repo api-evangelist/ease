@@ -1,0 +1,56 @@
+{
+    "page": {
+        "id": "13zw4w6v89nk",
+        "name": "Ease",
+        "url": "https://status.ease.com",
+        "time_zone": "America/Los_Angeles",
+        "updated_at": "2026-07-25T07:33:56.074-07:00"
+    },
+    "components": [
+        {
+            "id": "r4l5bcbs7h8g",
+            "name": "Web Application",
+            "status": "operational",
+            "created_at": "2021-11-29T10:19:08.845-08:00",
+            "updated_at": "2026-04-24T15:23:54.000-07:00",
+            "position": 1,
+            "description": null,
+            "showcase": true,
+            "start_date": "2021-11-28",
+            "group_id": null,
+            "page_id": "13zw4w6v89nk",
+            "group": false,
+            "only_show_if_degraded": false
+        },
+        {
+            "id": "k6sx2wnbnbkx",
+            "name": "API",
+            "status": "operational",
+            "created_at": "2021-11-29T10:18:51.630-08:00",
+            "updated_at": "2026-04-24T15:23:54.000-07:00",
+            "position": 2,
+            "description": null,
+            "showcase": true,
+            "start_date": "2021-11-28",
+            "group_id": null,
+            "page_id": "13zw4w6v89nk",
+            "group": false,
+            "only_show_if_degraded": false
+        },
+        {
+            "id": "bt6sd5dm56bq",
+            "name": "Support",
+            "status": "operational",
+            "created_at": "2022-03-22T09:31:35.131-07:00",
+            "updated_at": "2024-04-22T10:31:33.278-07:00",
+            "position": 3,
+            "description": "Support ticketing and helpdesk via email or phone.",
+            "showcase": false,
+            "start_date": "2022-03-22",
+            "group_id": null,
+            "page_id": "13zw4w6v89nk",
+            "group": false,
+            "only_show_if_degraded": false
+        }
+    ]
+}

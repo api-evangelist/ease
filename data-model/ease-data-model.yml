@@ -1,0 +1,192 @@
+generated: '2026-07-25'
+method: derived
+source: >-
+  openapi/ease-content-openapi.yml , openapi/ease-status-openapi.yml , and the live record shapes
+  returned by https://www.ease.com/wp-json/ and https://status.ease.com/api/v2/ on 2026-07-25
+summary: >-
+  Two disjoint entity graphs, one per public surface. The content graph is a WordPress content
+  model whose interesting part is the Ease Marketplace: a Partner entity (110 published records)
+  classified by two taxonomies, partner_types (16 terms) and benefit_types (23 terms), where the
+  benefit_types vocabulary carries the Ease integration idiom itself - EaseConnect,
+  EaseConnect+, COBRA Integration, HSA HRA & FSA Integration, Premium Billing Services. The
+  status graph is the Statuspage model: a Page owning Components, Incidents and
+  ScheduledMaintenances, each Incident owning dated IncidentUpdates. Nothing here models
+  benefits enrollment - Ease exposes no enrollment entity publicly.
+graphs:
+- key: content
+  base_url: https://www.ease.com/wp-json
+  openapi: openapi/ease-content-openapi.yml
+  id_scheme: integer WordPress post/term ids, plus a URL-safe slug on every record
+  entities:
+  - name: Partner
+    rest_base: partner
+    kind: custom post type
+    record_count: 110
+    operations: [listPartners, getPartner]
+    key_fields: [id, slug, title.rendered, content.rendered, excerpt.rendered, link, date, modified, featured_media, partner_types, benefit_types, status, type]
+    note: >-
+      One record per Ease Marketplace listing - carriers, general agencies, third-party
+      administrators, payroll providers, agency-management and CRM vendors. link points at the
+      public marketplace page, e.g. https://www.ease.com/marketplace/voya/.
+  - name: PartnerType
+    rest_base: partner_types
+    kind: taxonomy term
+    record_count: 16
+    operations: [listPartnerTypes, getPartnerType]
+    key_fields: [id, name, slug, description, count, link, taxonomy]
+    vocabulary: [Agency Management, Benefits, Broker Support, Connections, Enrollment Assistance, Financial Wellness, General Agency, Identity Theft & Protection, isolved, Life Insurance, Payroll Provider, Tailored Benefit Plans, Telemedicine, Third Party EDI, Third-Party Administrator, Trending Partners]
+  - name: BenefitType
+    rest_base: benefit_types
+    kind: taxonomy term
+    record_count: 23
+    operations: [listBenefitTypes, getBenefitType]
+    key_fields: [id, name, slug, description, count, link, taxonomy]
+    vocabulary: [AD&D, Agency Management, Broker Support, COBRA Administration, COBRA Integration, CRM Integration, Dental, EaseConnect, EaseConnect+, Enrollment Assistance, Fin, Financial Wellness, HR Tools & Compliance, HSA HRA & FSA Integration, Identity Theft & Protection, LTD, Pet Care Benefits, Pet Insurance Enrollment Integration, Premium Billing Services, STD, Tailored Benefits, Vision, Welfare Assistance Integration]
+  - name: Event
+    rest_base: event
+    kind: custom post type
+    record_count: 33
+    operations: [listEvents, getEvent]
+    key_fields: [id, slug, title.rendered, content.rendered, link, date, modified, featured_media, event_cat]
+  - name: EventCategory
+    rest_base: event_cat
+    kind: taxonomy term
+    operations: [listEventCategories, getEventCategory]
+    key_fields: [id, name, slug, count, link, taxonomy]
+  - name: Testimonial
+    rest_base: testimonials
+    kind: custom post type
+    record_count: 17
+    operations: [listTestimonials, getTestimonial]
+    key_fields: [id, slug, title.rendered, content.rendered, date, modified]
+  - name: Post
+    rest_base: posts
+    kind: core post type
+    operations: [listPosts, getPost]
+    key_fields: [id, slug, title.rendered, content.rendered, excerpt.rendered, date, modified, categories, tags, featured_media, author]
+  - name: Page
+    rest_base: pages
+    kind: core post type
+    operations: [listPages, getPage]
+    key_fields: [id, slug, title.rendered, content.rendered, parent, menu_order]
+  - name: MediaItem
+    rest_base: media
+    kind: core post type
+    operations: [listMedia, getMediaItem]
+    key_fields: [id, slug, source_url, media_type, mime_type, media_details, alt_text]
+  - name: Category
+    rest_base: categories
+    kind: taxonomy term
+    operations: [listCategories, getCategory]
+    key_fields: [id, name, slug, parent, count]
+  - name: Tag
+    rest_base: tags
+    kind: taxonomy term
+    operations: [listTags, getTag]
+    key_fields: [id, name, slug, count]
+  relationships:
+  - from: Partner
+    to: PartnerType
+    type: has_many
+    via: partner_types
+    note: Array of term ids; filterable as ?partner_types=<id> (verified - partner_types=343 returned X-WP-Total 4).
+  - from: Partner
+    to: BenefitType
+    type: has_many
+    via: benefit_types
+    note: Array of term ids; filterable as ?benefit_types=<id>.
+  - from: Partner
+    to: MediaItem
+    type: has_one
+    via: featured_media
+    note: Media id, 0 when absent; expandable via _embed (wp:featuredmedia).
+  - from: Event
+    to: EventCategory
+    type: has_many
+    via: event_cat
+  - from: Event
+    to: MediaItem
+    type: has_one
+    via: featured_media
+  - from: Post
+    to: Category
+    type: has_many
+    via: categories
+  - from: Post
+    to: Tag
+    type: has_many
+    via: tags
+  - from: Post
+    to: MediaItem
+    type: has_one
+    via: featured_media
+  - from: Page
+    to: Page
+    type: belongs_to
+    via: parent
+  - from: PartnerType
+    to: Partner
+    type: has_many
+    via: count
+    note: The term's count field is the number of partners carrying it.
+  hypermedia:
+    field: _links
+    relations: [self, collection, about, wp:attachment, wp:featuredmedia, wp:term, curies]
+    expansion: '_embed=1 materialises wp:featuredmedia and wp:term into an _embedded block.'
+- key: status
+  base_url: https://status.ease.com/api/v2
+  openapi: openapi/ease-status-openapi.yml
+  id_scheme: opaque alphanumeric Statuspage ids (page id 13zw4w6v89nk)
+  entities:
+  - name: Page
+    operations: [getStatusRollup, getStatusSummary]
+    key_fields: [id, name, url, time_zone, updated_at]
+  - name: Status
+    operations: [getStatusRollup]
+    key_fields: [indicator, description]
+    enum_indicator: [none, minor, major, critical]
+  - name: Component
+    operations: [listStatusComponents, getStatusSummary]
+    instances: [Web Application, API, Support]
+    key_fields: [id, name, status, position, showcase, start_date, group, group_id, page_id]
+    enum_status: [operational, degraded_performance, partial_outage, major_outage, under_maintenance]
+  - name: Incident
+    operations: [listIncidents, listUnresolvedIncidents, getStatusSummary]
+    record_count: 26
+    key_fields: [id, name, status, impact, shortlink, started_at, resolved_at, created_at, updated_at]
+  - name: IncidentUpdate
+    key_fields: [id, status, body, incident_id, display_at, created_at, affected_components]
+  - name: ScheduledMaintenance
+    operations: [listScheduledMaintenances, listUpcomingScheduledMaintenances, listActiveScheduledMaintenances]
+    key_fields: [id, name, status, impact, scheduled_for, scheduled_until]
+  relationships:
+  - from: Page
+    to: Component
+    type: has_many
+    via: page_id
+  - from: Page
+    to: Incident
+    type: has_many
+    via: page_id
+  - from: Page
+    to: ScheduledMaintenance
+    type: has_many
+    via: page_id
+  - from: Incident
+    to: IncidentUpdate
+    type: has_many
+    via: incident_id
+  - from: Incident
+    to: Component
+    type: has_many
+    via: components
+  - from: ScheduledMaintenance
+    to: IncidentUpdate
+    type: has_many
+    via: incident_id
+not_modelled:
+  note: >-
+    No public entity exists for employers, employees, brokers, enrollments, plans, carriers,
+    dependents, ACA filings or EDI 834 transmissions. Those live behind the Ease application
+    login and move over EaseConnect (X12 834 files), EaseConnect+ direct carrier connections, and
+    partner-portal SFTP, none of which are publicly documented.
