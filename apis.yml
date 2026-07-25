@@ -1,0 +1,76 @@
+aid: ease
+url: https://raw.githubusercontent.com/api-evangelist/ease/refs/heads/main/apis.yml
+name: Ease
+kind: company
+description: >-
+  Ease (legally Enrollease, Inc., San Francisco, with offices in Las Vegas and
+  Omaha) is a United States benefits administration and HR platform sold through
+  insurance brokers to small and mid-sized employers of roughly 2-250 employees.
+  It covers online benefits enrollment, benefits and plan management, ACA
+  reporting, onboarding and offboarding, and a partner marketplace spanning
+  carriers, general agencies, third-party administrators, payroll providers and
+  agency management systems. Ease is a group-benefits distribution platform
+  rather than a risk carrier, so its lines of business are medical, dental,
+  vision, life, AD&D, STD, LTD and voluntary/supplemental products written by its
+  carrier partners. It was acquired by Employee Navigator in April 2023 and the
+  two products continue to run side by side. Its API posture is partner-gated
+  and closed: Ease publishes no public developer portal, no API reference and no
+  machine-readable specification. developer.ease.com, developers.ease.com,
+  api.ease.com and docs.ease.com all resolve through wildcard DNS to the Ease
+  application sign-in page (HTTP 200, title "Sign In"/"Login"), and
+  ease.com/developers, /api, /developer and /integrations return 404. The real
+  integration surface is EaseConnect (self-service mapping of ANSI X12 EDI 834
+  enrollment files to carriers), EaseConnect+ (privately negotiated direct
+  carrier data connections, which in the Principal integration include an
+  Evidence of Insurability API and a Member Benefits API that Ease never
+  documents publicly), marketplace API integrations with payroll and HRIS
+  vendors such as ADP Workforce Now, ADP RUN, BambooHR, Paycor and Paylocity,
+  and a partner portal whose data leaves by scheduled report or SFTP. No ACORD,
+  AL3, NGDS or IVANS reference appears anywhere on the site - Ease operates in
+  the group-benefits ANSI X12 834 idiom, not the P&C ACORD idiom.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Insurance
+- United States
+- Employee Benefits
+- Benefits Administration
+- Group Benefits
+- Health Insurance
+- Insurtech
+- Broker
+- Enrollment
+- EDI
+- Payroll
+- Human Resources
+created: '2026-07-25'
+modified: '2026-07-25'
+specificationVersion: '0.19'
+apis: []
+common:
+- type: Website
+  url: https://www.ease.com/
+- type: Blog
+  url: https://www.ease.com/blog/
+- type: BlogRSS
+  url: https://www.ease.com/blog/feed/
+- type: LinkedIn
+  url: https://www.linkedin.com/company/ease
+- type: Support
+  url: https://www.ease.com/support/
+- type: StatusPage
+  url: https://status.ease.com/
+- type: Pricing
+  url: https://www.ease.com/pricing/
+- type: Security
+  url: https://www.ease.com/product/security/
+- type: PrivacyPolicy
+  url: https://www.ease.com/privacy/
+- type: TermsOfService
+  url: https://www.ease.com/terms/
+- type: PartnerProgram
+  url: https://www.ease.com/partners/join-us/
+- type: Marketplace
+  url: https://www.ease.com/marketplace/
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

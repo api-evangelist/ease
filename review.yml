@@ -1,0 +1,229 @@
+aid: ease
+name: Ease
+review:
+  question: Does Ease expose a public, self-serve developer portal or any documented public API?
+  answer: false
+  date: '2026-07-25'
+  reviewer: API Evangelist
+  homeMarket: United States
+  sector: Insurance
+  tier: benefits-admin
+findings:
+  summary: |
+    Ease (Enrollease, Inc.) publishes no public developer portal, no public API
+    reference, and no machine-readable API specification of any kind. Every
+    developer-shaped hostname on the ease.com domain resolves through wildcard
+    DNS to the Ease customer application sign-in page, and every developer-shaped
+    path on the marketing site 404s. The company does integrate heavily - it is
+    a benefits distribution hub - but every one of those integrations is
+    partner-gated: negotiated one-to-one with a carrier, payroll vendor or
+    general agency, delivered as an EDI 834 file or a private direct connection,
+    and administered through a login-only partner portal. Ease is therefore an
+    honest stub: real, substantial machine-to-machine plumbing with zero public
+    API surface.
+  developerPortal:
+    exists: false
+    url: ''
+    confirmed: false
+    note: |
+      No first-party developer portal exists. Probes recorded 2026-07-25.
+  acordPosture: no ACORD reference found; ANSI X12 EDI 834 idiom instead
+  acordNote: |
+    No occurrence of ACORD, AL3, ACORD XML, NGDS, IVANS, Applied Epic or
+    Vertafore AMS360 was found on ease.com (homepage, /about/, /partners/,
+    /partners/join-us/, /product/platform/marketplace/, .../marketplace/connections/,
+    .../managing-medical/834-files/, /product/security/, /product/security/sso/,
+    /marketplace/, /resources/faq/ all grepped). Ease sits in the group-employee-benefits
+    lane, where the exchange standard is ANSI ASC X12 EDI 834 (benefit enrollment
+    and maintenance), not the P&C ACORD/AL3/IVANS agency-download stack. The
+    marketplace does carry an "Agency Management" partner category (e.g. AgencyBloc),
+    but that is a listing of partner software, not an ACORD transport claim.
+  insuranceVerbs:
+    quote: false
+    bind: false
+    issue: partially - enrollment submission to carriers via EaseConnect 834 (EDI file) and EaseConnect+ (private direct connection); not a public API
+    fnol: false
+    note: |
+      Ease is group-benefits enrollment administration, not a P&C quote/bind/issue/FNOL
+      platform. The closest analogue to "issue" is transmitting enrollment and
+      maintenance records to a carrier. Evidence of Insurability (EOI) is handled
+      inside the EaseConnect+ direct connection with Principal, described in Ease
+      marketing as an "Evidence of Insurability (EOI) API" and a "Member Benefits
+      API", but neither is publicly documented, versioned, or self-serve. None of
+      the four verbs is exposed to an unaffiliated developer.
+  integrationSurfaces:
+  - name: EaseConnect (834)
+    mechanism: ANSI X12 EDI 834 enrollment files, self-service carrier file mapping inside the Ease application
+    access: customer/broker login
+    public: false
+  - name: EaseConnect+
+    mechanism: direct data connection between Ease and a carrier, set up by Ease implementation analysts with the broker
+    access: negotiated per carrier; includes an EOI API and Member Benefits API in the Principal integration
+    public: false
+  - name: Marketplace payroll/HRIS integrations
+    mechanism: API integrations built by Ease against partner platforms - ADP Workforce Now, ADP RUN, BambooHR, Paycor, Paylocity
+    access: enabled per employer group inside the product
+    public: false
+    note: Ease is the API consumer here, not the API publisher.
+  - name: Partner portal
+    mechanism: scheduled reports downloadable from the portal or delivered over SFTP
+    access: partner login
+    public: false
+  authModel:
+    publicApiAuth: none documented
+    applicationAuth: username/password with mandatory two-factor authentication; SAML single sign-on via Okta offered on the Enterprise package
+    oidcDiscovery: 'not served - https://secure.ease.com/.well-known/openid-configuration returned 404 (HTML), https://secure.ease.com/.well-known/oauth-authorization-server returned 404 (HTML), https://www.ease.com/.well-known/openid-configuration returned 404'
+    compliance: HIPAA, SOC 2 Type II, HITRUST claimed on https://www.ease.com/product/security/sso/
+  specifications:
+    openapiHarvested: false
+    count: 0
+    note: |
+      No OpenAPI, Swagger, AsyncAPI, GraphQL SDL, or .proto artifact was found or
+      saved. The openapi/ directory is deliberately absent.
+  webhooks:
+    documented: false
+    note: No public event catalog, webhook reference, or AsyncAPI document exists. Partner data egress is batch (scheduled report / SFTP), not event-driven.
+  postman:
+    public: false
+    note: Postman public search for "ease benefits" returned zero workspaces, collections, or APIs (2026-07-25).
+  graphql:
+    documented: false
+  grpc:
+    documented: false
+  sourceControl:
+    githubOrganization: none found
+    note: 'GitHub org probes all returned 404: github.com/ease, /easeinc, /enrollease, /ease-com, /easecentral.'
+  corporate:
+    legalEntity: Enrollease, Inc.
+    headquarters: San Francisco, California, United States
+    additionalOffices:
+    - Las Vegas, Nevada
+    - Omaha, Nebraska
+    ownership: Acquired by Employee Navigator, announced 2023-04-04; both products continue to operate separately. Site header reads "Ease is now owned by Employee Navigator!"
+    marketPosition: benefits administration and HR software for employers of 2-250 employees, distributed through insurance brokers; 75,000+ employer groups, 2.5M+ employees cited on ease.com/partners/join-us/
+probes:
+  date: '2026-07-25'
+  results:
+  - url: https://ease.com
+    status: 200
+    finalUrl: https://www.ease.com/
+    verdict: marketing site
+  - url: https://developer.ease.com
+    status: 200
+    finalUrl: https://secure.ease.com/
+    title: Sign In
+    verdict: login wall - wildcard DNS to the Ease application, NOT a developer portal
+  - url: https://developers.ease.com
+    status: 200
+    finalUrl: https://secure.ease.com/
+    title: Sign In
+    verdict: login wall - wildcard DNS to the Ease application
+  - url: https://api.ease.com
+    status: 200
+    finalUrl: https://secure.ease.com/
+    title: Sign In
+    verdict: login wall - wildcard DNS to the Ease application
+  - url: https://docs.ease.com
+    status: 200
+    title: Login
+    verdict: login wall - serves the Ease admin application login, not documentation
+  - url: https://ease.com/developers
+    status: 404
+  - url: https://ease.com/developer
+    status: 404
+  - url: https://ease.com/api
+    status: 404
+  - url: https://ease.com/integrations
+    status: 404
+  - url: https://ease.com/partners
+    status: 200
+    verdict: marketing partner program page; routes to a contact form at /partners/join-us/, no technical onboarding
+  - url: https://help.ease.com
+    status: 403
+    finalUrl: https://help.ease.com/hc/en-us
+    verdict: Zendesk help center; anonymous Help Center API returned 401 "Couldn't authenticate you"
+  - url: https://status.ease.com
+    status: 200
+    title: Ease Status
+    verdict: real public status page
+  - url: https://www.ease.com/openapi.json
+    status: 404
+  - url: https://www.ease.com/swagger.json
+    status: 404
+  - url: https://secure.ease.com/openapi.json
+    status: 404
+  - url: https://secure.ease.com/swagger.json
+    status: 404
+  - url: https://secure.ease.com/api-docs
+    status: 404
+  - url: https://secure.ease.com/api
+    status: 404
+  - url: https://secure.ease.com/api/v1
+    status: 404
+  - url: https://api.ease.com/openapi.json
+    status: 404
+  - url: https://api.ease.com/swagger.json
+    status: 404
+  - url: https://api.ease.com/docs
+    status: 404
+  - url: https://api.ease.com/v1
+    status: 404
+  - url: https://developer.ease.com/openapi.json
+    status: 404
+  - url: https://www.ease.com/sitemap.xml
+    status: 200
+    verdict: full page sitemap enumerated (98 pages); no developer, api, docs, or reference page exists
+transports:
+- protocol: REST
+  documented: false
+  note: No public REST API is documented. Private REST APIs exist inside EaseConnect+ carrier connections (EOI, Member Benefits) but are not published.
+- protocol: EDI
+  scheme: ANSI ASC X12 834
+  documented: true
+  public: false
+  note: EaseConnect 834 enrollment and maintenance files, mapped per carrier inside the customer application.
+- protocol: SFTP
+  documented: true
+  public: false
+  note: Partner portal scheduled reports can be delivered over SFTP.
+- protocol: WebSocket
+  documented: false
+- protocol: GraphQL
+  documented: false
+- protocol: gRPC
+  documented: false
+sources:
+- url: https://www.ease.com/
+  type: Website
+  note: Company positioning; header banner "Ease is now owned by Employee Navigator!"; carrier preferred-partner list. No API mention.
+- url: https://www.ease.com/partners/join-us/
+  type: PartnerProgram
+  note: 'Verbatim: "Gather the data you need ... with both manual and automatic data sync options via API (application programming interface) or EDI (electronic data interchange)." Partner portal export is by scheduled report or SFTP. Access is a contact form, not a signup.'
+- url: https://www.ease.com/product/platform/marketplace/connections/
+  type: Documentation
+  note: EaseConnect+ described as a direct carrier connection set up by Ease analysts; no technical detail, no API reference, no ACORD.
+- url: https://www.ease.com/product/platform/benefits-administration/managing-medical/834-files/
+  type: Documentation
+  note: Published 834 file carriers; confirms the ANSI X12 EDI 834 idiom (11 occurrences of "834 file" on the page).
+- url: https://www.ease.com/marketplace/
+  type: Marketplace
+  note: Partner directory with categories including EaseConnect, EaseConnect+, Third Party EDI, Payroll Provider, Agency Management, CRM Integration.
+- url: https://www.ease.com/blog/simple-setup-payroll-api-now-available/
+  type: Blog
+  note: Simple Setup Payroll connects Ease to ADP Workforce Now, ADP RUN, BambooHR, Paycor and Paylocity. Ease consumes those vendors' APIs; no Ease-published API, no docs, no keys.
+- url: https://www.ease.com/blog/open-enrollment-made-easier-through-api-update-from-ease-and-principal/
+  type: Blog
+  note: Only place Ease names its own APIs - an "Evidence of Insurability (EOI) API" and a "Member Benefits API" inside the EaseConnect+ Principal connection. Neither is publicly documented or self-serve.
+- url: https://www.ease.com/product/security/sso/
+  type: Documentation
+  note: SSO via Okta on the Enterprise package, mandatory two-factor authentication, HIPAA / SOC 2 Type II / HITRUST compliance claims.
+- url: https://www.ease.com/blog/employee-navigator-announces-acquisition-of-ease/
+  type: Blog
+  note: Acquisition by Employee Navigator announced 2023-04-04.
+actions:
+  openapiDirectoryCreated: false
+  apisYmlApisEmpty: true
+  reason: |
+    apis[] is intentionally empty. Ease publishes no public, documented, self-serve
+    API and no machine-readable specification, so there is nothing real to list.
+    Recording the absence accurately is the correct outcome for this record.
