@@ -122,6 +122,8 @@ apis:
   - type: StatusPage
     url: https://status.ease.com/
 common:
+- type: MCPServer
+  url: mcp/ease-mcp.yml
 - type: AgenticAccess
   url: agentic-access/ease-agentic-access.yml
 - type: Authentication
