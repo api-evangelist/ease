@@ -1,0 +1,122 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Ease Status API",
+    "version": "v2"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Status",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a summary of the status page",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://status.ease.com/api/v2/summary.json"
+          },
+          "docs": "Get a summary of the status page, including a status indicator, component statuses, unresolved incidents, and any upcoming or in-progress scheduled maintenances."
+        },
+        {
+          "info": {
+            "name": "Get the status rollup for the whole page",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://status.ease.com/api/v2/status.json"
+          },
+          "docs": "Get the status rollup for the whole page. This endpoint includes an indicator - one of none, minor, major, or critical - as well as a human description of the blended component status, for example \"All Systems Operational\", \"Partial System Outage\" or \"Major Service Outage\"."
+        },
+        {
+          "info": {
+            "name": "Get the components for the page",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://status.ease.com/api/v2/components.json"
+          },
+          "docs": "Get the components for the page. Each component is listed along with its status - one of operational, degraded_performance, partial_outage, or major_outage. The Ease page publishes three components: Web Application, API, and Support."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Incidents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a list of any unresolved incidents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://status.ease.com/api/v2/incidents/unresolved.json"
+          },
+          "docs": "Get a list of any unresolved incidents. This endpoint returns only incidents in the Investigating, Identified, or Monitoring state."
+        },
+        {
+          "info": {
+            "name": "Get a list of the most recent incidents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://status.ease.com/api/v2/incidents.json"
+          },
+          "docs": "Get a list of the 50 most recent incidents. This includes all unresolved incidents as well as those in the Resolved and Postmortem state."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Maintenance",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get a list of any upcoming maintenances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://status.ease.com/api/v2/scheduled-maintenances/upcoming.json"
+          },
+          "docs": "Get a list of any upcoming maintenances. A scheduled maintenance is a specific type of incident that is scheduled to start at some point in the future."
+        },
+        {
+          "info": {
+            "name": "Get a list of any active maintenances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://status.ease.com/api/v2/scheduled-maintenances/active.json"
+          },
+          "docs": "Get a list of any active maintenances, that is, maintenance windows currently in progress."
+        },
+        {
+          "info": {
+            "name": "Get a list of the most recent scheduled maintenances",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://status.ease.com/api/v2/scheduled-maintenances.json"
+          },
+          "docs": "Get a list of the 50 most recent scheduled maintenances, including upcoming, active and completed windows."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -2,12 +2,11 @@ generated: '2026-07-25'
 method: derived
 source: openapi/ease-content-openapi.yml, openapi/ease-status-openapi.yml
 status: candidate
-summary: >-
-  No official hosted or remote Model Context Protocol server exists for Ease. Searches of the
-  Ease site, the MCP registry, npm @modelcontextprotocol, and every developer-shaped Ease
-  hostname found nothing, and Ease has no GitHub organization. The tool set below is DERIVED by
-  API Evangelist from the two public read surfaces as a proposal only. It is not published by
-  Ease and no MCPServer pointer is wired in apis.yml, because no server exists.
+summary: No official hosted or remote Model Context Protocol server exists for Ease. Searches of the Ease
+  site, the MCP registry, npm @modelcontextprotocol, and every developer-shaped Ease hostname found nothing,
+  and Ease has no GitHub organization. The tool set below is DERIVED by API Evangelist from the two public
+  read surfaces as a proposal only. It is not published by Ease and no MCPServer pointer is wired in apis.yml,
+  because no server exists.
 server: null
 transport: null
 url: null
@@ -56,7 +55,11 @@ candidate_tools:
   source_operation: openapi/ease-status-openapi.yml#listIncidents
   maps_to: GET /incidents.json
 exclusions:
-  note: >-
-    No tool is proposed for any Ease benefits, enrollment, employer, employee, carrier or EDI 834
-    capability. Those surfaces are login-gated and privately negotiated; there is no public
-    operation to bind a tool to, and inventing one would be fabrication.
+  note: No tool is proposed for any Ease benefits, enrollment, employer, employee, carrier or EDI 834
+    capability. Those surfaces are login-gated and privately negotiated; there is no public operation
+    to bind a tool to, and inventing one would be fabrication.
+deployment:
+  mode: none
+  verified: derived
+  checked: '2026-08-12'
+  source: catalog MCP census

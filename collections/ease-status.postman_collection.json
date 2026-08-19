@@ -1,0 +1,639 @@
+{
+  "item": [
+    {
+      "id": "f40eca73-cfd2-494a-beba-037987201051",
+      "name": "Status",
+      "description": {
+        "content": "Rollup status indicator and per-component status for the Ease platform.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "24468201-b346-4650-918e-4cb188ec0b0a",
+          "name": "Get a summary of the status page",
+          "request": {
+            "name": "Get a summary of the status page",
+            "description": {
+              "content": "Get a summary of the status page, including a status indicator, component statuses, unresolved incidents, and any upcoming or in-progress scheduled maintenances.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "summary.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "a3dd5a70-a272-419f-afcd-22dcab55e91d",
+              "name": "The full status page summary.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "summary.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"summary\": \"Live response captured 2026-07-25\",\n  \"externalValue\": \"../examples/ease-status-summary.json\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "07af7727-244d-4401-a97e-8eb035f78203",
+          "name": "Get the status rollup for the whole page",
+          "request": {
+            "name": "Get the status rollup for the whole page",
+            "description": {
+              "content": "Get the status rollup for the whole page. This endpoint includes an indicator - one of none, minor, major, or critical - as well as a human description of the blended component status, for example \"All Systems Operational\", \"Partial System Outage\" or \"Major Service Outage\".",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "status.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "aed43952-9d10-4e4e-8e34-afc7efdbcacd",
+              "name": "The blended status indicator and description.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "status.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"summary\": \"Live response captured 2026-07-25\",\n  \"externalValue\": \"../examples/ease-status-status.json\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8ad25934-c53a-4e9b-866c-b459aafb2079",
+          "name": "Get the components for the page",
+          "request": {
+            "name": "Get the components for the page",
+            "description": {
+              "content": "Get the components for the page. Each component is listed along with its status - one of operational, degraded_performance, partial_outage, or major_outage. The Ease page publishes three components: Web Application, API, and Support.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "components.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "f11c50f0-e12c-4f19-98f7-ace0119027ae",
+              "name": "The component list with per-component status.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "components.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"summary\": \"Live response captured 2026-07-25\",\n  \"externalValue\": \"../examples/ease-status-components.json\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "4c8ce4d6-1b45-49a8-b8af-d12a03d95619",
+      "name": "Incidents",
+      "description": {
+        "content": "Unresolved and historical incidents, each composed of dated incident updates.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6d34bc42-0574-47b9-bfec-58361556fa67",
+          "name": "Get a list of any unresolved incidents",
+          "request": {
+            "name": "Get a list of any unresolved incidents",
+            "description": {
+              "content": "Get a list of any unresolved incidents. This endpoint returns only incidents in the Investigating, Identified, or Monitoring state.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "incidents",
+                "unresolved.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "cd546be6-108f-4758-8baf-81f1da3cdf87",
+              "name": "Unresolved incidents.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "incidents",
+                    "unresolved.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"page\": {\n    \"id\": \"13zw4w6v89nk\",\n    \"name\": \"Ease\",\n    \"url\": \"https://status.ease.com\",\n    \"updated_at\": \"1979-11-21T03:28:36.610Z\",\n    \"time_zone\": \"America/Los_Angeles\"\n  },\n  \"incidents\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"status\": \"investigating\",\n      \"impact\": \"major\",\n      \"incident_updates\": [\n        {\n          \"id\": \"string\",\n          \"status\": \"monitoring\",\n          \"body\": \"string\",\n          \"incident_id\": \"string\",\n          \"display_at\": \"1953-01-26T21:08:34.824Z\",\n          \"created_at\": \"2000-05-14T12:08:25.614Z\",\n          \"updated_at\": \"1978-08-22T18:37:52.681Z\",\n          \"deliver_notifications\": false,\n          \"custom_tweet\": \"string\",\n          \"tweet_id\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"status\": \"monitoring\",\n          \"body\": \"string\",\n          \"incident_id\": \"string\",\n          \"display_at\": \"1984-04-14T16:21:46.380Z\",\n          \"created_at\": \"1987-03-18T08:17:33.206Z\",\n          \"updated_at\": \"1967-10-29T11:39:05.074Z\",\n          \"deliver_notifications\": true,\n          \"custom_tweet\": \"string\",\n          \"tweet_id\": \"string\"\n        }\n      ],\n      \"shortlink\": \"http://ByWYFrJoArKqoMqwzyqlGtmhiVkKi.eiqKsR4.dlx88qKIhvAtfvNm4gAUfLIKi04UBli+JRGZxAD6rje\",\n      \"page_id\": \"string\",\n      \"started_at\": \"1989-07-24T06:48:34.242Z\",\n      \"monitoring_at\": \"2025-11-11T13:46:11.759Z\",\n      \"resolved_at\": \"1979-06-07T13:25:44.184Z\",\n      \"created_at\": \"1968-07-15T20:43:07.116Z\",\n      \"updated_at\": \"2007-09-24T01:56:28.934Z\",\n      \"components\": [\n        {\n          \"id\": \"string\",\n          \"name\": \"Web Application\",\n          \"status\": \"operational\",\n          \"description\": \"string\",\n          \"position\": 8764,\n          \"showcase\": true,\n          \"start_date\": \"string\",\n          \"group\": false,\n          \"group_id\": \"string\",\n          \"only_show_if_degraded\": false,\n          \"page_id\": \"string\",\n          \"created_at\": \"2019-04-08T05:35:23.040Z\",\n          \"updated_at\": \"1994-06-23T07:40:35.656Z\"\n        },\n        {\n          \"id\": \"string\",\n          \"name\": \"Web Application\",\n          \"status\": \"degraded_performance\",\n          \"description\": \"string\",\n          \"position\": 4535,\n          \"showcase\": false,\n          \"start_date\": \"string\",\n          \"group\": false,\n          \"group_id\": \"string\",\n          \"only_show_if_degraded\": true,\n          \"page_id\": \"string\",\n          \"created_at\": \"2003-03-30T18:48:43.463Z\",\n          \"updated_at\": \"1992-05-03T17:15:12.537Z\"\n        }\n      ],\n      \"reminder_intervals\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"status\": \"resolved\",\n      \"impact\": \"major\",\n      \"incident_updates\": [\n        {\n          \"id\": \"string\",\n          \"status\": \"completed\",\n          \"body\": \"string\",\n          \"incident_id\": \"string\",\n          \"display_at\": \"1999-05-24T11:15:16.985Z\",\n          \"created_at\": \"2026-04-04T05:09:56.684Z\",\n          \"updated_at\": \"1966-09-17T23:15:07.671Z\",\n          \"deliver_notifications\": false,\n          \"custom_tweet\": \"string\",\n          \"tweet_id\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"status\": \"postmortem\",\n          \"body\": \"string\",\n          \"incident_id\": \"string\",\n          \"display_at\": \"2019-08-08T07:37:21.626Z\",\n          \"created_at\": \"1991-04-05T04:54:36.958Z\",\n          \"updated_at\": \"1958-06-04T10:48:23.348Z\",\n          \"deliver_notifications\": false,\n          \"custom_tweet\": \"string\",\n          \"tweet_id\": \"string\"\n        }\n      ],\n      \"shortlink\": \"http://rIcaCfOWXINkZJr.nxCbkDc1cDSjSwRY1I9VeJu6KvBUtjcV,7v.ycvZxjR9MxpjZ82QJq1Vx\",\n      \"page_id\": \"string\",\n      \"started_at\": \"2026-07-08T15:40:12.139Z\",\n      \"monitoring_at\": \"2007-08-25T10:24:20.782Z\",\n      \"resolved_at\": \"1979-05-31T12:46:30.027Z\",\n      \"created_at\": \"1985-03-05T18:46:30.078Z\",\n      \"updated_at\": \"1998-11-17T08:27:40.002Z\",\n      \"components\": [\n        {\n          \"id\": \"string\",\n          \"name\": \"Web Application\",\n          \"status\": \"degraded_performance\",\n          \"description\": \"string\",\n          \"position\": 9284,\n          \"showcase\": false,\n          \"start_date\": \"string\",\n          \"group\": false,\n          \"group_id\": \"string\",\n          \"only_show_if_degraded\": true,\n          \"page_id\": \"string\",\n          \"created_at\": \"1992-10-15T21:13:30.044Z\",\n          \"updated_at\": \"1953-02-25T03:59:29.109Z\"\n        },\n        {\n          \"id\": \"string\",\n          \"name\": \"Web Application\",\n          \"status\": \"operational\",\n          \"description\": \"string\",\n          \"position\": 8467,\n          \"showcase\": true,\n          \"start_date\": \"string\",\n          \"group\": true,\n          \"group_id\": \"string\",\n          \"only_show_if_degraded\": false,\n          \"page_id\": \"string\",\n          \"created_at\": \"1978-04-15T20:52:56.404Z\",\n          \"updated_at\": \"1962-10-28T17:26:55.739Z\"\n        }\n      ],\n      \"reminder_intervals\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "caef42f0-d366-4b5a-b5a2-cddf3da29fc2",
+          "name": "Get a list of the most recent incidents",
+          "request": {
+            "name": "Get a list of the most recent incidents",
+            "description": {
+              "content": "Get a list of the 50 most recent incidents. This includes all unresolved incidents as well as those in the Resolved and Postmortem state.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "incidents.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "babff356-c2b5-4467-91cf-b0f86d9ffbea",
+              "name": "Recent incidents, newest first.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "incidents.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"summary\": \"Live response captured 2026-07-25 (26 incidents)\",\n  \"externalValue\": \"../examples/ease-status-incidents.json\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "8d2dfbf1-ed6c-48bf-ad72-7f7ac821a92e",
+      "name": "Maintenance",
+      "description": {
+        "content": "Upcoming, active and historical scheduled maintenance windows.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3cb16d1d-ea51-421d-9ba3-0cee6d05f8ea",
+          "name": "Get a list of any upcoming maintenances",
+          "request": {
+            "name": "Get a list of any upcoming maintenances",
+            "description": {
+              "content": "Get a list of any upcoming maintenances. A scheduled maintenance is a specific type of incident that is scheduled to start at some point in the future.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "scheduled-maintenances",
+                "upcoming.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "ba8064c4-e60a-4176-adea-78e3b7781df7",
+              "name": "Upcoming scheduled maintenances.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scheduled-maintenances",
+                    "upcoming.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"page\": {\n    \"id\": \"13zw4w6v89nk\",\n    \"name\": \"Ease\",\n    \"url\": \"https://status.ease.com\",\n    \"updated_at\": \"2003-06-30T15:21:00.847Z\",\n    \"time_zone\": \"America/Los_Angeles\"\n  },\n  \"scheduled_maintenances\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"status\": \"in_progress\",\n      \"impact\": \"critical\",\n      \"incident_updates\": [\n        {\n          \"id\": \"string\",\n          \"status\": \"postmortem\",\n          \"body\": \"string\",\n          \"incident_id\": \"string\",\n          \"display_at\": \"1982-08-15T21:36:59.433Z\",\n          \"created_at\": \"1973-08-24T00:59:00.026Z\",\n          \"updated_at\": \"2024-01-19T22:11:12.508Z\",\n          \"deliver_notifications\": false,\n          \"custom_tweet\": \"string\",\n          \"tweet_id\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"status\": \"postmortem\",\n          \"body\": \"string\",\n          \"incident_id\": \"string\",\n          \"display_at\": \"1978-07-02T08:31:59.488Z\",\n          \"created_at\": \"2016-10-01T21:35:33.431Z\",\n          \"updated_at\": \"2009-07-02T18:38:18.023Z\",\n          \"deliver_notifications\": true,\n          \"custom_tweet\": \"string\",\n          \"tweet_id\": \"string\"\n        }\n      ],\n      \"scheduled_for\": \"1960-08-02T10:43:58.740Z\",\n      \"scheduled_until\": \"1950-01-19T10:13:24.865Z\",\n      \"shortlink\": \"https://rHIH.nbijRWPlyhDMSRg\",\n      \"page_id\": \"string\",\n      \"monitoring_at\": \"2003-11-24T23:19:28.890Z\",\n      \"resolved_at\": \"2025-06-07T09:27:15.014Z\",\n      \"created_at\": \"1965-05-23T21:39:13.605Z\",\n      \"updated_at\": \"2024-03-10T23:36:03.297Z\",\n      \"components\": [\n        {\n          \"id\": \"string\",\n          \"name\": \"Web Application\",\n          \"status\": \"major_outage\",\n          \"description\": \"string\",\n          \"position\": 9496,\n          \"showcase\": false,\n          \"start_date\": \"string\",\n          \"group\": true,\n          \"group_id\": \"string\",\n          \"only_show_if_degraded\": false,\n          \"page_id\": \"string\",\n          \"created_at\": \"1947-02-07T06:00:41.766Z\",\n          \"updated_at\": \"1964-08-26T19:41:35.017Z\"\n        },\n        {\n          \"id\": \"string\",\n          \"name\": \"Web Application\",\n          \"status\": \"degraded_performance\",\n          \"description\": \"string\",\n          \"position\": 8385,\n          \"showcase\": false,\n          \"start_date\": \"string\",\n          \"group\": true,\n          \"group_id\": \"string\",\n          \"only_show_if_degraded\": true,\n          \"page_id\": \"string\",\n          \"created_at\": \"2010-03-16T22:40:09.841Z\",\n          \"updated_at\": \"2007-09-24T00:46:44.723Z\"\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"status\": \"scheduled\",\n      \"impact\": \"major\",\n      \"incident_updates\": [\n        {\n          \"id\": \"string\",\n          \"status\": \"postmortem\",\n          \"body\": \"string\",\n          \"incident_id\": \"string\",\n          \"display_at\": \"1971-01-07T11:54:38.068Z\",\n          \"created_at\": \"1962-09-17T08:05:09.372Z\",\n          \"updated_at\": \"1958-06-05T17:31:44.152Z\",\n          \"deliver_notifications\": false,\n          \"custom_tweet\": \"string\",\n          \"tweet_id\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"status\": \"completed\",\n          \"body\": \"string\",\n          \"incident_id\": \"string\",\n          \"display_at\": \"2014-03-23T23:14:58.367Z\",\n          \"created_at\": \"1999-01-04T10:27:10.666Z\",\n          \"updated_at\": \"1966-12-06T14:38:25.743Z\",\n          \"deliver_notifications\": true,\n          \"custom_tweet\": \"string\",\n          \"tweet_id\": \"string\"\n        }\n      ],\n      \"scheduled_for\": \"1959-06-15T14:52:49.530Z\",\n      \"scheduled_until\": \"2017-03-25T05:29:18.218Z\",\n      \"shortlink\": \"https://yYwahKlhvnNvvpP.lspqaTESwVcrBeS3iDlDC0PLmyZ.v\",\n      \"page_id\": \"string\",\n      \"monitoring_at\": \"2000-09-12T02:02:38.264Z\",\n      \"resolved_at\": \"1987-11-22T13:05:39.748Z\",\n      \"created_at\": \"1962-04-24T18:38:08.472Z\",\n      \"updated_at\": \"1963-04-20T13:51:41.061Z\",\n      \"components\": [\n        {\n          \"id\": \"string\",\n          \"name\": \"Web Application\",\n          \"status\": \"degraded_performance\",\n          \"description\": \"string\",\n          \"position\": 8438,\n          \"showcase\": true,\n          \"start_date\": \"string\",\n          \"group\": false,\n          \"group_id\": \"string\",\n          \"only_show_if_degraded\": false,\n          \"page_id\": \"string\",\n          \"created_at\": \"1975-01-06T15:44:55.284Z\",\n          \"updated_at\": \"1969-05-09T05:21:30.572Z\"\n        },\n        {\n          \"id\": \"string\",\n          \"name\": \"Web Application\",\n          \"status\": \"operational\",\n          \"description\": \"string\",\n          \"position\": 4032,\n          \"showcase\": false,\n          \"start_date\": \"string\",\n          \"group\": false,\n          \"group_id\": \"string\",\n          \"only_show_if_degraded\": true,\n          \"page_id\": \"string\",\n          \"created_at\": \"1985-11-03T01:23:35.287Z\",\n          \"updated_at\": \"2001-12-29T06:52:30.428Z\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "875d5231-c856-4eab-a89e-349fa5a336e8",
+          "name": "Get a list of any active maintenances",
+          "request": {
+            "name": "Get a list of any active maintenances",
+            "description": {
+              "content": "Get a list of any active maintenances, that is, maintenance windows currently in progress.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "scheduled-maintenances",
+                "active.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "e28e957f-3743-44a9-82b0-bd7a7a80eef1",
+              "name": "Active scheduled maintenances.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scheduled-maintenances",
+                    "active.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"page\": {\n    \"id\": \"13zw4w6v89nk\",\n    \"name\": \"Ease\",\n    \"url\": \"https://status.ease.com\",\n    \"updated_at\": \"2003-06-30T15:21:00.847Z\",\n    \"time_zone\": \"America/Los_Angeles\"\n  },\n  \"scheduled_maintenances\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"status\": \"in_progress\",\n      \"impact\": \"critical\",\n      \"incident_updates\": [\n        {\n          \"id\": \"string\",\n          \"status\": \"postmortem\",\n          \"body\": \"string\",\n          \"incident_id\": \"string\",\n          \"display_at\": \"1982-08-15T21:36:59.433Z\",\n          \"created_at\": \"1973-08-24T00:59:00.026Z\",\n          \"updated_at\": \"2024-01-19T22:11:12.508Z\",\n          \"deliver_notifications\": false,\n          \"custom_tweet\": \"string\",\n          \"tweet_id\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"status\": \"postmortem\",\n          \"body\": \"string\",\n          \"incident_id\": \"string\",\n          \"display_at\": \"1978-07-02T08:31:59.488Z\",\n          \"created_at\": \"2016-10-01T21:35:33.431Z\",\n          \"updated_at\": \"2009-07-02T18:38:18.023Z\",\n          \"deliver_notifications\": true,\n          \"custom_tweet\": \"string\",\n          \"tweet_id\": \"string\"\n        }\n      ],\n      \"scheduled_for\": \"1960-08-02T10:43:58.740Z\",\n      \"scheduled_until\": \"1950-01-19T10:13:24.865Z\",\n      \"shortlink\": \"https://rHIH.nbijRWPlyhDMSRg\",\n      \"page_id\": \"string\",\n      \"monitoring_at\": \"2003-11-24T23:19:28.890Z\",\n      \"resolved_at\": \"2025-06-07T09:27:15.014Z\",\n      \"created_at\": \"1965-05-23T21:39:13.605Z\",\n      \"updated_at\": \"2024-03-10T23:36:03.297Z\",\n      \"components\": [\n        {\n          \"id\": \"string\",\n          \"name\": \"Web Application\",\n          \"status\": \"major_outage\",\n          \"description\": \"string\",\n          \"position\": 9496,\n          \"showcase\": false,\n          \"start_date\": \"string\",\n          \"group\": true,\n          \"group_id\": \"string\",\n          \"only_show_if_degraded\": false,\n          \"page_id\": \"string\",\n          \"created_at\": \"1947-02-07T06:00:41.766Z\",\n          \"updated_at\": \"1964-08-26T19:41:35.017Z\"\n        },\n        {\n          \"id\": \"string\",\n          \"name\": \"Web Application\",\n          \"status\": \"degraded_performance\",\n          \"description\": \"string\",\n          \"position\": 8385,\n          \"showcase\": false,\n          \"start_date\": \"string\",\n          \"group\": true,\n          \"group_id\": \"string\",\n          \"only_show_if_degraded\": true,\n          \"page_id\": \"string\",\n          \"created_at\": \"2010-03-16T22:40:09.841Z\",\n          \"updated_at\": \"2007-09-24T00:46:44.723Z\"\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"status\": \"scheduled\",\n      \"impact\": \"major\",\n      \"incident_updates\": [\n        {\n          \"id\": \"string\",\n          \"status\": \"postmortem\",\n          \"body\": \"string\",\n          \"incident_id\": \"string\",\n          \"display_at\": \"1971-01-07T11:54:38.068Z\",\n          \"created_at\": \"1962-09-17T08:05:09.372Z\",\n          \"updated_at\": \"1958-06-05T17:31:44.152Z\",\n          \"deliver_notifications\": false,\n          \"custom_tweet\": \"string\",\n          \"tweet_id\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"status\": \"completed\",\n          \"body\": \"string\",\n          \"incident_id\": \"string\",\n          \"display_at\": \"2014-03-23T23:14:58.367Z\",\n          \"created_at\": \"1999-01-04T10:27:10.666Z\",\n          \"updated_at\": \"1966-12-06T14:38:25.743Z\",\n          \"deliver_notifications\": true,\n          \"custom_tweet\": \"string\",\n          \"tweet_id\": \"string\"\n        }\n      ],\n      \"scheduled_for\": \"1959-06-15T14:52:49.530Z\",\n      \"scheduled_until\": \"2017-03-25T05:29:18.218Z\",\n      \"shortlink\": \"https://yYwahKlhvnNvvpP.lspqaTESwVcrBeS3iDlDC0PLmyZ.v\",\n      \"page_id\": \"string\",\n      \"monitoring_at\": \"2000-09-12T02:02:38.264Z\",\n      \"resolved_at\": \"1987-11-22T13:05:39.748Z\",\n      \"created_at\": \"1962-04-24T18:38:08.472Z\",\n      \"updated_at\": \"1963-04-20T13:51:41.061Z\",\n      \"components\": [\n        {\n          \"id\": \"string\",\n          \"name\": \"Web Application\",\n          \"status\": \"degraded_performance\",\n          \"description\": \"string\",\n          \"position\": 8438,\n          \"showcase\": true,\n          \"start_date\": \"string\",\n          \"group\": false,\n          \"group_id\": \"string\",\n          \"only_show_if_degraded\": false,\n          \"page_id\": \"string\",\n          \"created_at\": \"1975-01-06T15:44:55.284Z\",\n          \"updated_at\": \"1969-05-09T05:21:30.572Z\"\n        },\n        {\n          \"id\": \"string\",\n          \"name\": \"Web Application\",\n          \"status\": \"operational\",\n          \"description\": \"string\",\n          \"position\": 4032,\n          \"showcase\": false,\n          \"start_date\": \"string\",\n          \"group\": false,\n          \"group_id\": \"string\",\n          \"only_show_if_degraded\": true,\n          \"page_id\": \"string\",\n          \"created_at\": \"1985-11-03T01:23:35.287Z\",\n          \"updated_at\": \"2001-12-29T06:52:30.428Z\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b27392fc-8182-474f-b7d4-217e23dc35fd",
+          "name": "Get a list of the most recent scheduled maintenances",
+          "request": {
+            "name": "Get a list of the most recent scheduled maintenances",
+            "description": {
+              "content": "Get a list of the 50 most recent scheduled maintenances, including upcoming, active and completed windows.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "scheduled-maintenances.json"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "response": [
+            {
+              "id": "45b68326-9573-448c-8e34-8871e9429fb3",
+              "name": "Recent scheduled maintenances.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "scheduled-maintenances.json"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"page\": {\n    \"id\": \"13zw4w6v89nk\",\n    \"name\": \"Ease\",\n    \"url\": \"https://status.ease.com\",\n    \"updated_at\": \"2003-06-30T15:21:00.847Z\",\n    \"time_zone\": \"America/Los_Angeles\"\n  },\n  \"scheduled_maintenances\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"status\": \"in_progress\",\n      \"impact\": \"critical\",\n      \"incident_updates\": [\n        {\n          \"id\": \"string\",\n          \"status\": \"postmortem\",\n          \"body\": \"string\",\n          \"incident_id\": \"string\",\n          \"display_at\": \"1982-08-15T21:36:59.433Z\",\n          \"created_at\": \"1973-08-24T00:59:00.026Z\",\n          \"updated_at\": \"2024-01-19T22:11:12.508Z\",\n          \"deliver_notifications\": false,\n          \"custom_tweet\": \"string\",\n          \"tweet_id\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"status\": \"postmortem\",\n          \"body\": \"string\",\n          \"incident_id\": \"string\",\n          \"display_at\": \"1978-07-02T08:31:59.488Z\",\n          \"created_at\": \"2016-10-01T21:35:33.431Z\",\n          \"updated_at\": \"2009-07-02T18:38:18.023Z\",\n          \"deliver_notifications\": true,\n          \"custom_tweet\": \"string\",\n          \"tweet_id\": \"string\"\n        }\n      ],\n      \"scheduled_for\": \"1960-08-02T10:43:58.740Z\",\n      \"scheduled_until\": \"1950-01-19T10:13:24.865Z\",\n      \"shortlink\": \"https://rHIH.nbijRWPlyhDMSRg\",\n      \"page_id\": \"string\",\n      \"monitoring_at\": \"2003-11-24T23:19:28.890Z\",\n      \"resolved_at\": \"2025-06-07T09:27:15.014Z\",\n      \"created_at\": \"1965-05-23T21:39:13.605Z\",\n      \"updated_at\": \"2024-03-10T23:36:03.297Z\",\n      \"components\": [\n        {\n          \"id\": \"string\",\n          \"name\": \"Web Application\",\n          \"status\": \"major_outage\",\n          \"description\": \"string\",\n          \"position\": 9496,\n          \"showcase\": false,\n          \"start_date\": \"string\",\n          \"group\": true,\n          \"group_id\": \"string\",\n          \"only_show_if_degraded\": false,\n          \"page_id\": \"string\",\n          \"created_at\": \"1947-02-07T06:00:41.766Z\",\n          \"updated_at\": \"1964-08-26T19:41:35.017Z\"\n        },\n        {\n          \"id\": \"string\",\n          \"name\": \"Web Application\",\n          \"status\": \"degraded_performance\",\n          \"description\": \"string\",\n          \"position\": 8385,\n          \"showcase\": false,\n          \"start_date\": \"string\",\n          \"group\": true,\n          \"group_id\": \"string\",\n          \"only_show_if_degraded\": true,\n          \"page_id\": \"string\",\n          \"created_at\": \"2010-03-16T22:40:09.841Z\",\n          \"updated_at\": \"2007-09-24T00:46:44.723Z\"\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"status\": \"scheduled\",\n      \"impact\": \"major\",\n      \"incident_updates\": [\n        {\n          \"id\": \"string\",\n          \"status\": \"postmortem\",\n          \"body\": \"string\",\n          \"incident_id\": \"string\",\n          \"display_at\": \"1971-01-07T11:54:38.068Z\",\n          \"created_at\": \"1962-09-17T08:05:09.372Z\",\n          \"updated_at\": \"1958-06-05T17:31:44.152Z\",\n          \"deliver_notifications\": false,\n          \"custom_tweet\": \"string\",\n          \"tweet_id\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"status\": \"completed\",\n          \"body\": \"string\",\n          \"incident_id\": \"string\",\n          \"display_at\": \"2014-03-23T23:14:58.367Z\",\n          \"created_at\": \"1999-01-04T10:27:10.666Z\",\n          \"updated_at\": \"1966-12-06T14:38:25.743Z\",\n          \"deliver_notifications\": true,\n          \"custom_tweet\": \"string\",\n          \"tweet_id\": \"string\"\n        }\n      ],\n      \"scheduled_for\": \"1959-06-15T14:52:49.530Z\",\n      \"scheduled_until\": \"2017-03-25T05:29:18.218Z\",\n      \"shortlink\": \"https://yYwahKlhvnNvvpP.lspqaTESwVcrBeS3iDlDC0PLmyZ.v\",\n      \"page_id\": \"string\",\n      \"monitoring_at\": \"2000-09-12T02:02:38.264Z\",\n      \"resolved_at\": \"1987-11-22T13:05:39.748Z\",\n      \"created_at\": \"1962-04-24T18:38:08.472Z\",\n      \"updated_at\": \"1963-04-20T13:51:41.061Z\",\n      \"components\": [\n        {\n          \"id\": \"string\",\n          \"name\": \"Web Application\",\n          \"status\": \"degraded_performance\",\n          \"description\": \"string\",\n          \"position\": 8438,\n          \"showcase\": true,\n          \"start_date\": \"string\",\n          \"group\": false,\n          \"group_id\": \"string\",\n          \"only_show_if_degraded\": false,\n          \"page_id\": \"string\",\n          \"created_at\": \"1975-01-06T15:44:55.284Z\",\n          \"updated_at\": \"1969-05-09T05:21:30.572Z\"\n        },\n        {\n          \"id\": \"string\",\n          \"name\": \"Web Application\",\n          \"status\": \"operational\",\n          \"description\": \"string\",\n          \"position\": 4032,\n          \"showcase\": false,\n          \"start_date\": \"string\",\n          \"group\": false,\n          \"group_id\": \"string\",\n          \"only_show_if_degraded\": true,\n          \"page_id\": \"string\",\n          \"created_at\": \"1985-11-03T01:23:35.287Z\",\n          \"updated_at\": \"2001-12-29T06:52:30.428Z\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://status.ease.com/api/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "noauth"
+  },
+  "info": {
+    "_postman_id": "c4792ddc-4b19-4086-8b4f-e527fef1cce1",
+    "name": "Ease Status API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Ease publishes a public status page at https://status.ease.com/, hosted on Atlassian Statuspage (page id 13zw4w6v89nk). That page exposes the standard Statuspage v2 JSON API anonymously, documented by Ease itself at https://status.ease.com/api, and it is the only first-party, self-serve, machine-readable operational API that Ease publishes: current platform status, the component list (Web Application, API, Support), open and historical incidents, and scheduled maintenance windows. Every operation is a GET, requires no authentication, and returns JSON.\n\nThis document is GENERATED by API Evangelist from the endpoint reference Ease serves at https://status.ease.com/api and from live responses fetched on 2026-07-25 (saved under examples/). Every path here was verified to return HTTP 200 anonymously on that date. Response schemas describe the fields actually observed in those live responses; where the Statuspage documentation shows a field that the Ease page did not currently populate (for example incident components or scheduled maintenance windows, both empty at capture time), the field is modelled from the reference examples on https://status.ease.com/api. Nothing is invented.\n\nNote the scope: this is the status API. It is not the Ease benefits administration API. Ease has no public developer portal, and its enrollment data moves over ANSI X12 EDI 834 files (EaseConnect), privately negotiated direct carrier connections (EaseConnect+), and partner-portal SFTP, none of which are publicly documented.\n\nContact Support:\n Name: Ease Support",
+      "type": "text/plain"
+    }
+  }
+}
