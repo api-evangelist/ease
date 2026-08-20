@@ -46,6 +46,21 @@ tags:
 - Group Benefits
 - Health Insurance
 - Insurtech
+- Brokers
+- Enrollment
+- EDI
+- Payroll
+- Human Resources
+- Marketplace
+- Status
+tags_raw:
+- Insurance
+- United States
+- Employee Benefits
+- Benefits Administration
+- Group Benefits
+- Health Insurance
+- Insurtech
 - Broker
 - Enrollment
 - EDI
@@ -70,6 +85,11 @@ apis:
   humanURL: https://www.ease.com/marketplace/
   baseURL: https://www.ease.com/wp-json
   tags:
+  - Marketplace
+  - Content
+  - Partners
+  - Event
+  tags_raw:
   - Marketplace
   - Content
   - Partners
@@ -101,6 +121,9 @@ apis:
   humanURL: https://status.ease.com/
   baseURL: https://status.ease.com/api/v2
   tags:
+  - Status
+  - Incidents
+  tags_raw:
   - Status
   - Incidents
   - Operations
