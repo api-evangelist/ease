@@ -122,6 +122,8 @@ apis:
   humanURL: https://www.ease.com/marketplace/
   baseURL: https://www.ease.com/wp-json
   tags:
+  - Event
+  tags_raw:
   - Events
   properties:
   - type: OpenAPI
