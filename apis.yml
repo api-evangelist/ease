@@ -492,6 +492,8 @@ apis:
   humanURL: https://www.ease.com/marketplace/
   baseURL: https://www.ease.com/wp-json
   tags:
+  - oEmbed
+  tags_raw:
   - o Embed
   properties:
   - type: OpenAPI
