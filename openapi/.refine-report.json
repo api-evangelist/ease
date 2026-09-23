@@ -1,0 +1,49 @@
+{
+  "provider": "ease",
+  "sources": [
+    "_original/ease-content-openapi.yml",
+    "_original/ease-status-openapi.yml"
+  ],
+  "outputs": [
+    "ease-discovery-api-openapi.yml",
+    "ease-events-api-openapi.yml",
+    "ease-marketplace-api-openapi.yml",
+    "ease-media-api-openapi.yml",
+    "ease-pages-api-openapi.yml",
+    "ease-posts-api-openapi.yml",
+    "ease-search-api-openapi.yml",
+    "ease-taxonomy-api-openapi.yml",
+    "ease-testimonials-api-openapi.yml",
+    "ease-oembed-api-openapi.yml",
+    "ease-incidents-api-openapi.yml",
+    "ease-maintenance-api-openapi.yml",
+    "ease-status-api-openapi.yml"
+  ],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "ease-content-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "ease-status-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "superseded outputs removed: ease-o-embed-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 13 total)"
+  ],
+  "skipped": [
+    "ease-discovery-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ease-events-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ease-incidents-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ease-maintenance-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ease-marketplace-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ease-media-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ease-o-embed-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ease-pages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ease-posts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ease-search-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ease-status-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ease-taxonomy-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ease-testimonials-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}
