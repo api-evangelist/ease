@@ -97,77 +97,25 @@ created: '2026-07-25'
 modified: '2026-07-25'
 specificationVersion: '0.23'
 apis:
-- aid: ease:ease-discovery-api
-  name: Ease Discovery API
-  description: 'Self-describing metadata: registered content types, taxonomies and post statuses.'
-  humanURL: https://www.ease.com/marketplace/
+- aid: ease:ease-com-website-wordpress-rest
+  name: Ease Website (WordPress REST)
+  description: 'The public WordPress REST API (wp-json) of the Ease website at www.ease.com: the route
+    index of the site''s content management system, catalogued as one site surface rather than as separate
+    APIs.'
   baseURL: https://www.ease.com/wp-json
   tags:
-  - Discovery
+  - WordPress
+  x-surface: platform-generated
   properties:
-  - type: OpenAPI
-    url: openapi/ease-discovery-api-openapi.yml
-  - type: Examples
-    url: examples/ease-partners.json
-  - type: Examples
-    url: examples/ease-partner-types.json
-  - type: Examples
-    url: examples/ease-benefit-types.json
-  - type: Examples
-    url: examples/ease-content-types.json
   - type: Documentation
-    url: https://www.ease.com/marketplace/
-  - type: APIReference
-    url: https://status.ease.com/api
-  - type: Examples
-    url: examples/ease-status-summary.json
-  - type: Examples
-    url: examples/ease-status-components.json
-  - type: Examples
-    url: examples/ease-status-incidents.json
-  - type: Webhooks
-    url: asyncapi/ease-status-webhooks.yml
-  - type: StatusPage
-    url: https://status.ease.com/
-- aid: ease:ease-events-api
-  name: Ease Events API
-  description: Ease in-person and virtual events, and their categories.
-  humanURL: https://www.ease.com/marketplace/
-  baseURL: https://www.ease.com/wp-json
-  tags:
-  - Event
-  tags_raw:
-  - Events
-  properties:
-  - type: OpenAPI
-    url: openapi/ease-events-api-openapi.yml
-  - type: Examples
-    url: examples/ease-partners.json
-  - type: Examples
-    url: examples/ease-partner-types.json
-  - type: Examples
-    url: examples/ease-benefit-types.json
-  - type: Examples
-    url: examples/ease-content-types.json
-  - type: Documentation
-    url: https://www.ease.com/marketplace/
-  - type: APIReference
-    url: https://status.ease.com/api
-  - type: Examples
-    url: examples/ease-status-summary.json
-  - type: Examples
-    url: examples/ease-status-components.json
-  - type: Examples
-    url: examples/ease-status-incidents.json
-  - type: Webhooks
-    url: asyncapi/ease-status-webhooks.yml
-  - type: StatusPage
-    url: https://status.ease.com/
+    url: https://www.ease.com/wp-json
+  x-platform: wordpress
+  x-platform-surface: rest
 - aid: ease:ease-incidents-api
   name: Ease Incidents API
   description: Unresolved and historical incidents, each composed of dated incident updates.
   humanURL: https://www.ease.com/marketplace/
-  baseURL: https://www.ease.com/wp-json
+  baseURL: https://status.ease.com/api/v2
   tags:
   - Incidents
   properties:
@@ -199,7 +147,7 @@ apis:
   name: Ease Maintenance API
   description: Upcoming, active and historical scheduled maintenance windows.
   humanURL: https://www.ease.com/marketplace/
-  baseURL: https://www.ease.com/wp-json
+  baseURL: https://status.ease.com/api/v2
   tags:
   - Maintenance
   properties:
@@ -227,174 +175,11 @@ apis:
     url: asyncapi/ease-status-webhooks.yml
   - type: StatusPage
     url: https://status.ease.com/
-- aid: ease:ease-marketplace-api
-  name: Ease Marketplace API
-  description: >-
-    The Ease Marketplace partner directory: carriers, general agencies, third-party administrators, payroll
-    providers and agency-management vendors, plus the partner_types and benefit_types taxonomies used
-    to filter them.
-  humanURL: https://www.ease.com/marketplace/
-  baseURL: https://www.ease.com/wp-json
-  tags:
-  - Marketplace
-  properties:
-  - type: OpenAPI
-    url: openapi/ease-marketplace-api-openapi.yml
-  - type: Examples
-    url: examples/ease-partners.json
-  - type: Examples
-    url: examples/ease-partner-types.json
-  - type: Examples
-    url: examples/ease-benefit-types.json
-  - type: Examples
-    url: examples/ease-content-types.json
-  - type: Documentation
-    url: https://www.ease.com/marketplace/
-  - type: APIReference
-    url: https://status.ease.com/api
-  - type: Examples
-    url: examples/ease-status-summary.json
-  - type: Examples
-    url: examples/ease-status-components.json
-  - type: Examples
-    url: examples/ease-status-incidents.json
-  - type: Webhooks
-    url: asyncapi/ease-status-webhooks.yml
-  - type: StatusPage
-    url: https://status.ease.com/
-- aid: ease:ease-media-api
-  name: Ease Media API
-  description: Images and files in the Ease media library.
-  humanURL: https://www.ease.com/marketplace/
-  baseURL: https://www.ease.com/wp-json
-  tags:
-  - Media
-  properties:
-  - type: OpenAPI
-    url: openapi/ease-media-api-openapi.yml
-  - type: Examples
-    url: examples/ease-partners.json
-  - type: Examples
-    url: examples/ease-partner-types.json
-  - type: Examples
-    url: examples/ease-benefit-types.json
-  - type: Examples
-    url: examples/ease-content-types.json
-  - type: Documentation
-    url: https://www.ease.com/marketplace/
-  - type: APIReference
-    url: https://status.ease.com/api
-  - type: Examples
-    url: examples/ease-status-summary.json
-  - type: Examples
-    url: examples/ease-status-components.json
-  - type: Examples
-    url: examples/ease-status-incidents.json
-  - type: Webhooks
-    url: asyncapi/ease-status-webhooks.yml
-  - type: StatusPage
-    url: https://status.ease.com/
-- aid: ease:ease-pages-api
-  name: Ease Pages API
-  description: Marketing and product pages on www.ease.com.
-  humanURL: https://www.ease.com/marketplace/
-  baseURL: https://www.ease.com/wp-json
-  tags:
-  - Pages
-  properties:
-  - type: OpenAPI
-    url: openapi/ease-pages-api-openapi.yml
-  - type: Examples
-    url: examples/ease-partners.json
-  - type: Examples
-    url: examples/ease-partner-types.json
-  - type: Examples
-    url: examples/ease-benefit-types.json
-  - type: Examples
-    url: examples/ease-content-types.json
-  - type: Documentation
-    url: https://www.ease.com/marketplace/
-  - type: APIReference
-    url: https://status.ease.com/api
-  - type: Examples
-    url: examples/ease-status-summary.json
-  - type: Examples
-    url: examples/ease-status-components.json
-  - type: Examples
-    url: examples/ease-status-incidents.json
-  - type: Webhooks
-    url: asyncapi/ease-status-webhooks.yml
-  - type: StatusPage
-    url: https://status.ease.com/
-- aid: ease:ease-posts-api
-  name: Ease Posts API
-  description: The Ease blog.
-  humanURL: https://www.ease.com/marketplace/
-  baseURL: https://www.ease.com/wp-json
-  tags:
-  - Posts
-  properties:
-  - type: OpenAPI
-    url: openapi/ease-posts-api-openapi.yml
-  - type: Examples
-    url: examples/ease-partners.json
-  - type: Examples
-    url: examples/ease-partner-types.json
-  - type: Examples
-    url: examples/ease-benefit-types.json
-  - type: Examples
-    url: examples/ease-content-types.json
-  - type: Documentation
-    url: https://www.ease.com/marketplace/
-  - type: APIReference
-    url: https://status.ease.com/api
-  - type: Examples
-    url: examples/ease-status-summary.json
-  - type: Examples
-    url: examples/ease-status-components.json
-  - type: Examples
-    url: examples/ease-status-incidents.json
-  - type: Webhooks
-    url: asyncapi/ease-status-webhooks.yml
-  - type: StatusPage
-    url: https://status.ease.com/
-- aid: ease:ease-search-api
-  name: Ease Search API
-  description: Cross-content-type search over published site content.
-  humanURL: https://www.ease.com/marketplace/
-  baseURL: https://www.ease.com/wp-json
-  tags:
-  - Search
-  properties:
-  - type: OpenAPI
-    url: openapi/ease-search-api-openapi.yml
-  - type: Examples
-    url: examples/ease-partners.json
-  - type: Examples
-    url: examples/ease-partner-types.json
-  - type: Examples
-    url: examples/ease-benefit-types.json
-  - type: Examples
-    url: examples/ease-content-types.json
-  - type: Documentation
-    url: https://www.ease.com/marketplace/
-  - type: APIReference
-    url: https://status.ease.com/api
-  - type: Examples
-    url: examples/ease-status-summary.json
-  - type: Examples
-    url: examples/ease-status-components.json
-  - type: Examples
-    url: examples/ease-status-incidents.json
-  - type: Webhooks
-    url: asyncapi/ease-status-webhooks.yml
-  - type: StatusPage
-    url: https://status.ease.com/
 - aid: ease:ease-status-api
   name: Ease Status API
   description: Rollup status indicator and per-component status for the Ease platform.
   humanURL: https://www.ease.com/marketplace/
-  baseURL: https://www.ease.com/wp-json
+  baseURL: https://status.ease.com/api/v2
   tags:
   - Status
   properties:
@@ -422,107 +207,7 @@ apis:
     url: asyncapi/ease-status-webhooks.yml
   - type: StatusPage
     url: https://status.ease.com/
-- aid: ease:ease-taxonomy-api
-  name: Ease Taxonomy API
-  description: Blog categories and tags.
-  humanURL: https://www.ease.com/marketplace/
-  baseURL: https://www.ease.com/wp-json
-  tags:
-  - Taxonomy
-  properties:
-  - type: OpenAPI
-    url: openapi/ease-taxonomy-api-openapi.yml
-  - type: Examples
-    url: examples/ease-partners.json
-  - type: Examples
-    url: examples/ease-partner-types.json
-  - type: Examples
-    url: examples/ease-benefit-types.json
-  - type: Examples
-    url: examples/ease-content-types.json
-  - type: Documentation
-    url: https://www.ease.com/marketplace/
-  - type: APIReference
-    url: https://status.ease.com/api
-  - type: Examples
-    url: examples/ease-status-summary.json
-  - type: Examples
-    url: examples/ease-status-components.json
-  - type: Examples
-    url: examples/ease-status-incidents.json
-  - type: Webhooks
-    url: asyncapi/ease-status-webhooks.yml
-  - type: StatusPage
-    url: https://status.ease.com/
-- aid: ease:ease-testimonials-api
-  name: Ease Testimonials API
-  description: Published customer testimonials.
-  humanURL: https://www.ease.com/marketplace/
-  baseURL: https://www.ease.com/wp-json
-  tags:
-  - Testimonials
-  properties:
-  - type: OpenAPI
-    url: openapi/ease-testimonials-api-openapi.yml
-  - type: Examples
-    url: examples/ease-partners.json
-  - type: Examples
-    url: examples/ease-partner-types.json
-  - type: Examples
-    url: examples/ease-benefit-types.json
-  - type: Examples
-    url: examples/ease-content-types.json
-  - type: Documentation
-    url: https://www.ease.com/marketplace/
-  - type: APIReference
-    url: https://status.ease.com/api
-  - type: Examples
-    url: examples/ease-status-summary.json
-  - type: Examples
-    url: examples/ease-status-components.json
-  - type: Examples
-    url: examples/ease-status-incidents.json
-  - type: Webhooks
-    url: asyncapi/ease-status-webhooks.yml
-  - type: StatusPage
-    url: https://status.ease.com/
-- aid: ease:ease-o-embed-api
-  name: Ease o Embed API
-  description: oEmbed representation of an ease.com URL.
-  humanURL: https://www.ease.com/marketplace/
-  baseURL: https://www.ease.com/wp-json
-  tags:
-  - oEmbed
-  tags_raw:
-  - o Embed
-  properties:
-  - type: OpenAPI
-    url: openapi/ease-o-embed-api-openapi.yml
-  - type: Examples
-    url: examples/ease-partners.json
-  - type: Examples
-    url: examples/ease-partner-types.json
-  - type: Examples
-    url: examples/ease-benefit-types.json
-  - type: Examples
-    url: examples/ease-content-types.json
-  - type: Documentation
-    url: https://www.ease.com/marketplace/
-  - type: APIReference
-    url: https://status.ease.com/api
-  - type: Examples
-    url: examples/ease-status-summary.json
-  - type: Examples
-    url: examples/ease-status-components.json
-  - type: Examples
-    url: examples/ease-status-incidents.json
-  - type: Webhooks
-    url: asyncapi/ease-status-webhooks.yml
-  - type: StatusPage
-    url: https://status.ease.com/
 common:
-- type: Overlay
-  url: overlays/ease-content-overlay.yaml
 - type: Overlay
   url: overlays/ease-status-overlay.yaml
 - type: X-MCPServerCandidate

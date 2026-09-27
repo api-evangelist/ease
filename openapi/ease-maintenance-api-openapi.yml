@@ -72,35 +72,6 @@ paths:
                 $ref: '#/components/schemas/ScheduledMaintenancesResponse'
 components:
   schemas:
-    Page:
-      type: object
-      description: Identity of the status page itself.
-      properties:
-        id:
-          type: string
-          examples:
-          - 13zw4w6v89nk
-        name:
-          type: string
-          examples:
-          - Ease
-        url:
-          type: string
-          format: uri
-          examples:
-          - https://status.ease.com
-        time_zone:
-          type: string
-          examples:
-          - America/Los_Angeles
-        updated_at:
-          type: string
-          format: date-time
-      required:
-      - id
-      - name
-      - url
-      - updated_at
     Component:
       type: object
       description: A single monitored component of the Ease platform.
@@ -153,18 +124,6 @@ components:
       - id
       - name
       - status
-    ScheduledMaintenancesResponse:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/Page'
-        scheduled_maintenances:
-          type: array
-          items:
-            $ref: '#/components/schemas/ScheduledMaintenance'
-      required:
-      - page
-      - scheduled_maintenances
     IncidentUpdate:
       type: object
       description: One dated update posted against an incident.
@@ -284,3 +243,44 @@ components:
       - status
       - impact
       - incident_updates
+    ScheduledMaintenancesResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/Page'
+        scheduled_maintenances:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduledMaintenance'
+      required:
+      - page
+      - scheduled_maintenances
+    Page:
+      type: object
+      description: Identity of the status page itself.
+      properties:
+        id:
+          type: string
+          examples:
+          - 13zw4w6v89nk
+        name:
+          type: string
+          examples:
+          - Ease
+        url:
+          type: string
+          format: uri
+          examples:
+          - https://status.ease.com
+        time_zone:
+          type: string
+          examples:
+          - America/Los_Angeles
+        updated_at:
+          type: string
+          format: date-time
+      required:
+      - id
+      - name
+      - url
+      - updated_at

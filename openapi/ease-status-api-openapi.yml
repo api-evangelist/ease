@@ -84,127 +84,6 @@ paths:
                   externalValue: ../examples/ease-status-components.json
 components:
   schemas:
-    SummaryResponse:
-      type: object
-      properties:
-        page:
-          $ref: '#/components/schemas/Page'
-        status:
-          $ref: '#/components/schemas/Status'
-        components:
-          type: array
-          items:
-            $ref: '#/components/schemas/Component'
-        incidents:
-          type: array
-          items:
-            $ref: '#/components/schemas/Incident'
-        scheduled_maintenances:
-          type: array
-          items:
-            $ref: '#/components/schemas/ScheduledMaintenance'
-      required:
-      - page
-      - status
-      - components
-      - incidents
-      - scheduled_maintenances
-    Incident:
-      type: object
-      description: An incident, composed of many incident updates.
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        status:
-          type: string
-          enum:
-          - investigating
-          - identified
-          - monitoring
-          - resolved
-          - postmortem
-        impact:
-          type: string
-          enum:
-          - none
-          - minor
-          - major
-          - critical
-        shortlink:
-          type: string
-          format: uri
-        page_id:
-          type: string
-        started_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        monitoring_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        resolved_at:
-          type:
-          - string
-          - 'null'
-          format: date-time
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-        incident_updates:
-          type: array
-          items:
-            $ref: '#/components/schemas/IncidentUpdate'
-        components:
-          type: array
-          items:
-            $ref: '#/components/schemas/Component'
-        reminder_intervals:
-          type:
-          - string
-          - 'null'
-      required:
-      - id
-      - name
-      - status
-      - impact
-      - incident_updates
-    Page:
-      type: object
-      description: Identity of the status page itself.
-      properties:
-        id:
-          type: string
-          examples:
-          - 13zw4w6v89nk
-        name:
-          type: string
-          examples:
-          - Ease
-        url:
-          type: string
-          format: uri
-          examples:
-          - https://status.ease.com
-        time_zone:
-          type: string
-          examples:
-          - America/Los_Angeles
-        updated_at:
-          type: string
-          format: date-time
-      required:
-      - id
-      - name
-      - url
-      - updated_at
     Component:
       type: object
       description: A single monitored component of the Ease platform.
@@ -309,35 +188,31 @@ components:
       - status
       - body
       - incident_id
-    Status:
-      type: object
-      description: The blended status of the page.
-      properties:
-        indicator:
-          type: string
-          enum:
-          - none
-          - minor
-          - major
-          - critical
-        description:
-          type: string
-          examples:
-          - All Systems Operational
-          - Partial System Outage
-      required:
-      - indicator
-      - description
-    StatusResponse:
+    SummaryResponse:
       type: object
       properties:
         page:
           $ref: '#/components/schemas/Page'
         status:
           $ref: '#/components/schemas/Status'
+        components:
+          type: array
+          items:
+            $ref: '#/components/schemas/Component'
+        incidents:
+          type: array
+          items:
+            $ref: '#/components/schemas/Incident'
+        scheduled_maintenances:
+          type: array
+          items:
+            $ref: '#/components/schemas/ScheduledMaintenance'
       required:
       - page
       - status
+      - components
+      - incidents
+      - scheduled_maintenances
     ScheduledMaintenance:
       type: object
       description: A scheduled maintenance window - an incident scheduled to start in the future.
@@ -405,6 +280,121 @@ components:
       - status
       - impact
       - incident_updates
+    Status:
+      type: object
+      description: The blended status of the page.
+      properties:
+        indicator:
+          type: string
+          enum:
+          - none
+          - minor
+          - major
+          - critical
+        description:
+          type: string
+          examples:
+          - All Systems Operational
+          - Partial System Outage
+      required:
+      - indicator
+      - description
+    Incident:
+      type: object
+      description: An incident, composed of many incident updates.
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        status:
+          type: string
+          enum:
+          - investigating
+          - identified
+          - monitoring
+          - resolved
+          - postmortem
+        impact:
+          type: string
+          enum:
+          - none
+          - minor
+          - major
+          - critical
+        shortlink:
+          type: string
+          format: uri
+        page_id:
+          type: string
+        started_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        monitoring_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        resolved_at:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        incident_updates:
+          type: array
+          items:
+            $ref: '#/components/schemas/IncidentUpdate'
+        components:
+          type: array
+          items:
+            $ref: '#/components/schemas/Component'
+        reminder_intervals:
+          type:
+          - string
+          - 'null'
+      required:
+      - id
+      - name
+      - status
+      - impact
+      - incident_updates
+    Page:
+      type: object
+      description: Identity of the status page itself.
+      properties:
+        id:
+          type: string
+          examples:
+          - 13zw4w6v89nk
+        name:
+          type: string
+          examples:
+          - Ease
+        url:
+          type: string
+          format: uri
+          examples:
+          - https://status.ease.com
+        time_zone:
+          type: string
+          examples:
+          - America/Los_Angeles
+        updated_at:
+          type: string
+          format: date-time
+      required:
+      - id
+      - name
+      - url
+      - updated_at
     ComponentsResponse:
       type: object
       properties:
@@ -417,3 +407,13 @@ components:
       required:
       - page
       - components
+    StatusResponse:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/Page'
+        status:
+          $ref: '#/components/schemas/Status'
+      required:
+      - page
+      - status
