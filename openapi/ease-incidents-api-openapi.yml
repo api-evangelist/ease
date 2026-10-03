@@ -60,110 +60,6 @@ paths:
                   externalValue: ../examples/ease-status-incidents.json
 components:
   schemas:
-    Component:
-      type: object
-      description: A single monitored component of the Ease platform.
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-          examples:
-          - Web Application
-          - API
-          - Support
-        status:
-          type: string
-          enum:
-          - operational
-          - degraded_performance
-          - partial_outage
-          - major_outage
-          - under_maintenance
-        description:
-          type:
-          - string
-          - 'null'
-        position:
-          type: integer
-        showcase:
-          type: boolean
-        start_date:
-          type:
-          - string
-          - 'null'
-        group:
-          type: boolean
-        group_id:
-          type:
-          - string
-          - 'null'
-        only_show_if_degraded:
-          type: boolean
-        page_id:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-      required:
-      - id
-      - name
-      - status
-    IncidentUpdate:
-      type: object
-      description: One dated update posted against an incident.
-      properties:
-        id:
-          type: string
-        status:
-          type: string
-          enum:
-          - investigating
-          - identified
-          - monitoring
-          - resolved
-          - postmortem
-          - scheduled
-          - in_progress
-          - verifying
-          - completed
-        body:
-          type: string
-        incident_id:
-          type: string
-        display_at:
-          type: string
-          format: date-time
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-        affected_components:
-          type:
-          - array
-          - 'null'
-          items:
-            type: object
-        deliver_notifications:
-          type: boolean
-        custom_tweet:
-          type:
-          - string
-          - 'null'
-        tweet_id:
-          type:
-          - string
-          - 'null'
-      required:
-      - id
-      - status
-      - body
-      - incident_id
     IncidentsResponse:
       type: object
       properties:
@@ -272,3 +168,107 @@ components:
       - name
       - url
       - updated_at
+    Component:
+      type: object
+      description: A single monitored component of the Ease platform.
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          examples:
+          - Web Application
+          - API
+          - Support
+        status:
+          type: string
+          enum:
+          - operational
+          - degraded_performance
+          - partial_outage
+          - major_outage
+          - under_maintenance
+        description:
+          type:
+          - string
+          - 'null'
+        position:
+          type: integer
+        showcase:
+          type: boolean
+        start_date:
+          type:
+          - string
+          - 'null'
+        group:
+          type: boolean
+        group_id:
+          type:
+          - string
+          - 'null'
+        only_show_if_degraded:
+          type: boolean
+        page_id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+      required:
+      - id
+      - name
+      - status
+    IncidentUpdate:
+      type: object
+      description: One dated update posted against an incident.
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum:
+          - investigating
+          - identified
+          - monitoring
+          - resolved
+          - postmortem
+          - scheduled
+          - in_progress
+          - verifying
+          - completed
+        body:
+          type: string
+        incident_id:
+          type: string
+        display_at:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        affected_components:
+          type:
+          - array
+          - 'null'
+          items:
+            type: object
+        deliver_notifications:
+          type: boolean
+        custom_tweet:
+          type:
+          - string
+          - 'null'
+        tweet_id:
+          type:
+          - string
+          - 'null'
+      required:
+      - id
+      - status
+      - body
+      - incident_id
