@@ -139,87 +139,6 @@ components:
       - status
       - impact
       - incident_updates
-    Page:
-      type: object
-      description: Identity of the status page itself.
-      properties:
-        id:
-          type: string
-          examples:
-          - 13zw4w6v89nk
-        name:
-          type: string
-          examples:
-          - Ease
-        url:
-          type: string
-          format: uri
-          examples:
-          - https://status.ease.com
-        time_zone:
-          type: string
-          examples:
-          - America/Los_Angeles
-        updated_at:
-          type: string
-          format: date-time
-      required:
-      - id
-      - name
-      - url
-      - updated_at
-    Component:
-      type: object
-      description: A single monitored component of the Ease platform.
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-          examples:
-          - Web Application
-          - API
-          - Support
-        status:
-          type: string
-          enum:
-          - operational
-          - degraded_performance
-          - partial_outage
-          - major_outage
-          - under_maintenance
-        description:
-          type:
-          - string
-          - 'null'
-        position:
-          type: integer
-        showcase:
-          type: boolean
-        start_date:
-          type:
-          - string
-          - 'null'
-        group:
-          type: boolean
-        group_id:
-          type:
-          - string
-          - 'null'
-        only_show_if_degraded:
-          type: boolean
-        page_id:
-          type: string
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-      required:
-      - id
-      - name
-      - status
     IncidentUpdate:
       type: object
       description: One dated update posted against an incident.
@@ -272,3 +191,84 @@ components:
       - status
       - body
       - incident_id
+    Component:
+      type: object
+      description: A single monitored component of the Ease platform.
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+          examples:
+          - Web Application
+          - API
+          - Support
+        status:
+          type: string
+          enum:
+          - operational
+          - degraded_performance
+          - partial_outage
+          - major_outage
+          - under_maintenance
+        description:
+          type:
+          - string
+          - 'null'
+        position:
+          type: integer
+        showcase:
+          type: boolean
+        start_date:
+          type:
+          - string
+          - 'null'
+        group:
+          type: boolean
+        group_id:
+          type:
+          - string
+          - 'null'
+        only_show_if_degraded:
+          type: boolean
+        page_id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+      required:
+      - id
+      - name
+      - status
+    Page:
+      type: object
+      description: Identity of the status page itself.
+      properties:
+        id:
+          type: string
+          examples:
+          - 13zw4w6v89nk
+        name:
+          type: string
+          examples:
+          - Ease
+        url:
+          type: string
+          format: uri
+          examples:
+          - https://status.ease.com
+        time_zone:
+          type: string
+          examples:
+          - America/Los_Angeles
+        updated_at:
+          type: string
+          format: date-time
+      required:
+      - id
+      - name
+      - url
+      - updated_at
