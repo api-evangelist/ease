@@ -71,7 +71,7 @@ tags:
 - Group Benefits
 - Health Insurance
 - Insurtech
-- Brokers
+- Brokerage
 - Enrollment
 - EDI
 - Payroll
@@ -93,6 +93,7 @@ tags_raw:
 - Human Resources
 - Marketplace
 - Status
+- Brokers
 created: '2026-07-25'
 modified: '2026-07-25'
 specificationVersion: '0.23'
