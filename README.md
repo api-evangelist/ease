@@ -1,4 +1,4 @@
-# Ease (ease)
+# Ease
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,86 +64,140 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Ease (legally Enrollease, Inc., San Francisco, with offices in Las Vegas and Omaha) is a United States benefits administration and HR platform sold through insurance brokers to small and mid-sized employers of roughly 2-250 employees. It covers online benefits enrollment, benefits and plan management, ACA reporting, onboarding and offboarding, and a partner marketplace spanning carriers, general agencies, third-party administrators, payroll providers and agency management systems. Ease is a group-benefits distribution platform rather than a risk carrier, so its lines of business are medical, dental, vision, life, AD&D, STD, LTD and voluntary/supplemental products written by its carrier partners. It was acquired by Employee Navigator in April 2023 and the two products continue to run side by side.
+Ease (legally Enrollease, Inc., San Francisco, with offices in Las Vegas and Omaha) is a United States benefits administration and HR platform sold through insurance brokers to small and mid-sized employers of roughly 2-250 employees. It covers online benefits enrollment, benefits and plan management, ACA reporting, onboarding and offboarding, and a partner marketplace spanning carriers, general agencies, third-party administrators, payroll providers and agency management systems. Ease is a group-benefits distribution platform rather than a risk carrier, so its lines of business are medical, dental, vision, life, AD&D, STD, LTD and voluntary/supplemental products written by its carrier partners. It was acquired by Employee Navigator in April 2023 and is now in announced end-of-life: Employee Navigator published a dated two-phase sunset on 2026-06-03 under which no new companies can be added to Ease from 2027-01-01 and the platform goes read-only, with integrations and support discontinued, on 2027-07-01. Its benefits API posture is partner-gated and closed: Ease publishes no public developer portal and no API reference for the product. developer.ease.com, developers.ease.com, api.ease.com and docs.ease.com all resolve through wildcard DNS to the Ease application sign-in page, and ease.com/developers, /api, /developer and /integrations return 404. The real integration surface is EaseConnect (self-service mapping of ANSI X12 EDI 834 enrollment files to carriers), EaseConnect+ (privately negotiated direct carrier data connections, which in the Principal integration include an Evidence of Insurability API and a Member Benefits API that Ease never documents publicly), marketplace API integrations with payroll and HRIS vendors such as ADP Workforce Now, ADP RUN, BambooHR, Paycor and Paylocity, and a partner portal whose data leaves by scheduled report or SFTP. Ease does however operate two real, anonymous, machine-readable read surfaces that this record captures: the WordPress REST API behind www.ease.com, which serves the full Ease Marketplace partner directory (110 partners, 16 partner types, 23 benefit types) alongside blog, page, event and testimonial content; and the Atlassian Statuspage v2 API on status.ease.com, which serves platform status, component health, incident history and an anonymous incident-webhook subscription. No ACORD, AL3, NGDS or IVANS reference appears anywhere on the site - Ease operates in the group-benefits ANSI X12 834 idiom, not the P&C ACORD idiom.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/ease/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/ease/refs/heads/main/apis.yml)
+**Areas:** Insurance · United States · Employee Benefits · Benefits Administration · Group Benefits · Health Insurance · Insurtech · Brokerage · Enrollment · EDI · Payroll · Human Resources
 
-## Tags
+## Ease on APIs.io
 
-- Insurance
-- United States
-- Employee Benefits
-- Benefits Administration
-- Group Benefits
-- Health Insurance
-- Insurtech
-- Broker
-- Enrollment
-- EDI
-- Payroll
-- Human Resources
+Everything profiled for Ease is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/ease/](https://apis.io/providers/ease/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (4)
 
-- **Created:** 2026-07-25
-- **Modified:** 2026-07-25
+- [Ease Website (WordPress REST)](https://apis.io/apis/ease/ease-com-website-wordpress-rest/) — The public WordPress REST API (wp-json) of the Ease website at www.ease.com: the route index of the site's content management system, catalogued as one site…
+- [Ease Incidents API](https://apis.io/apis/ease/ease-incidents-api/) — Unresolved and historical incidents, each composed of dated incident updates.
+- [Ease Maintenance API](https://apis.io/apis/ease/ease-maintenance-api/) — Upcoming, active and historical scheduled maintenance windows.
+- [Ease Status API](https://apis.io/apis/ease/ease-status-api/) — Rollup status indicator and per-component status for the Ease platform.
 
-## APIs
+### Published properties
 
-**None.** Ease publishes no public, self-serve API, no developer portal, no API reference, and no machine-readable specification. This is an honest stub, and it is the correct record for this company.
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Probed 2026-07-25:
+#### AsyncAPI (1)
 
-| Surface | HTTP | Verdict |
-| --- | --- | --- |
-| `https://developer.ease.com` | 200 → `secure.ease.com` (title "Sign In") | Login wall (wildcard DNS to the Ease app), not a developer portal |
-| `https://developers.ease.com` | 200 → `secure.ease.com` (title "Sign In") | Login wall |
-| `https://api.ease.com` | 200 → `secure.ease.com` (title "Sign In") | Login wall |
-| `https://docs.ease.com` | 200 (title "Login") | Login wall — serves the Ease admin login, not docs |
-| `https://ease.com/developers` | 404 | — |
-| `https://ease.com/developer` | 404 | — |
-| `https://ease.com/api` | 404 | — |
-| `https://ease.com/integrations` | 404 | — |
-| `https://ease.com/partners` | 200 | Marketing partner program; contact form, no technical onboarding |
-| `https://status.ease.com` | 200 | Real public status page |
+Event-driven and webhook contracts.
 
-Every spec path probed — `/openapi.json`, `/swagger.json`, `/api-docs`, `/api`, `/api/v1`, `/docs` across `www.`, `secure.`, `api.` and `developer.` — returned 404 or HTML. No public Postman workspace. No GitHub organization. No OIDC or OAuth discovery document.
+- [Ease Status Webhooks](https://apis.io/asyncapis/ease/ease-status-webhooks/)
 
-## The real integration surface
+#### MCP servers (1)
 
-Ease integrates constantly; none of it is public.
+Model Context Protocol servers that expose the API to agents.
 
-- **EaseConnect (834)** — self-service mapping of ANSI ASC X12 **EDI 834** benefit enrollment and maintenance files to carriers, done inside the customer application.
-- **EaseConnect+** — privately negotiated direct data connections between Ease and a carrier, stood up by Ease implementation analysts. The Principal connection is the only place Ease names its own APIs in public: an *Evidence of Insurability (EOI) API* and a *Member Benefits API*. Neither is documented, versioned, or self-serve.
-- **Marketplace payroll/HRIS integrations** — ADP Workforce Now, ADP RUN, BambooHR, Paycor, Paylocity. Ease is the API *consumer* here, not the publisher.
-- **Partner portal** — data leaves by scheduled report download or SFTP. Batch, not events.
+- [ease-mcp.yml](https://apis.io/servers/ease/ease-mcp-yml/)
 
-## ACORD posture
+#### Agentic access (1)
 
-**No ACORD reference found; ANSI X12 EDI 834 idiom instead.**
+Which operations an agent can call, which act, and which need a human in the loop.
 
-No occurrence of ACORD, AL3, ACORD XML, NGDS, IVANS, Applied Epic or Vertafore AMS360 appears anywhere on ease.com. That is not an oversight — Ease sits in the group-employee-benefits lane, where the exchange standard is ANSI ASC X12 834, not the property-and-casualty ACORD/AL3 agency-download stack. The marketplace lists an "Agency Management" partner category, but that is a directory of partner software, not an ACORD transport claim.
+- [Ease Agentic Access](https://apis.io/agentic-access/ease/ease-agentic-access/)
 
-## Quote / Bind / Issue / FNOL
+#### Examples (5)
 
-None of the four P&C verbs is publicly exposed. The nearest analogue to *issue* is transmitting enrollment and maintenance records to a carrier over EaseConnect 834 or EaseConnect+ — customer- and partner-gated, never open.
+Example requests and responses.
 
-## Auth
+- [Ease Content Types](https://apis.io/examples/ease/ease-content-types/)
+- [Ease Status Components](https://apis.io/examples/ease/ease-status-components/)
+- [Ease Status Incidents](https://apis.io/examples/ease/ease-status-incidents/)
+- [Ease Status Status](https://apis.io/examples/ease/ease-status-status/)
+- [Ease Status Summary](https://apis.io/examples/ease/ease-status-summary/)
 
-No public API authentication scheme is documented. The application itself uses username/password with mandatory two-factor authentication, plus SAML single sign-on via **Okta** on the Enterprise package. Ease claims HIPAA, SOC 2 Type II and HITRUST compliance. `/.well-known/openid-configuration` and `/.well-known/oauth-authorization-server` are not served on `secure.ease.com` (404 HTML).
+#### Collections (3)
 
-## Links
+Postman and Open Collection request collections.
+
+- [Moved to /providers/ease/](https://apis.io/collections/ease/open-ease-content/)
+- [API Collection](https://apis.io/collections/ease/open-ease-content-wp-routes-original/)
+- [Ease Status API](https://apis.io/collections/ease/open-ease-status/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Ease Status Overlay](https://apis.io/overlays/ease/ease-status-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Ease Authentication](https://apis.io/security/ease/ease-authentication/)
+- [Ease Domain Security](https://apis.io/security/ease/ease-domain-security/)
+- [Ease Trust Center](https://apis.io/security/ease/ease-trust-center/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.ease.com/)
+- [Documentation](https://help.ease.com/)
+- [API reference](https://status.ease.com/api)
+- [Pricing](https://www.ease.com/pricing/)
+- [Support](https://www.ease.com/support/)
 - [Blog](https://www.ease.com/blog/)
-- [Partner Program](https://www.ease.com/partners/join-us/)
-- [Marketplace](https://www.ease.com/marketplace/)
-- [Carrier & Partner Connections](https://www.ease.com/product/platform/marketplace/connections/)
-- [Published 834 File Carriers](https://www.ease.com/product/platform/benefits-administration/managing-medical/834-files/)
 - [Security](https://www.ease.com/product/security/)
+- [Compliance](https://www.ease.com/product/security/sso/)
+- [Terms of service](https://www.ease.com/terms/)
+- [Privacy policy](https://www.ease.com/privacy/)
 - [Status](https://status.ease.com/)
-- [LinkedIn](https://www.linkedin.com/company/ease)
 
-## Review
+## API Evangelist rating
 
-See [review.yml](review.yml) for the full probe log, transports, and sources, reviewed by API Evangelist on 2026-07-25.
+**Kin Score 39.2** — thin · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 57.1 |
+| Contract quality | 24.3 |
+| Contract governance | 18.2 |
+| Operational transparency | 42.1 |
+| Developer ergonomics | 37.5 |
+| Access clarity | 53.9 |
+
+**Agent readiness 35.2** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | na |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | na |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | — |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 26.3** — Insurance
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/ease/](https://apis.io/providers/ease/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Ease: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/ease/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
